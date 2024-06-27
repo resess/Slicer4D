@@ -33,12 +33,6 @@ PS: This tool is only accurate for deterministic programs
 
 - The user can press any of the Slicer4D Actions including Step Over, Step Into, Run to Cursor etc. to execute the program slice. These actions will behave similarly to the traditional debugger, with the difference that it only navigate through the program slice. 
 
-- The Slicer4D instance has a new tab which includes 3 sub-tabs. The data dependencies, control dependencies, and a dependencies graph visualization of the current statement are shown within these sub-tabs, respectively. They update dynamically to reflect the relevant information for the current line being executed in the debugging session.
-  
-<p align="center"><img src="./assets/DataDep.png" width="600"/></p>
-<p align="center"><img src="./assets/ControlDep.png" width="600"/></p>
-<p align="center"><img src="./assets/DepGraph.png" width="600"/></p>
-
 ## 4. Architecture 
 <p align="center"><img src="./assets/Architecture.png" width="600"/></p>
 

@@ -1,0 +1,10 @@
+<application>
+  <component name="Trusted.Paths">
+    <option name="TRUSTED_PROJECT_PATHS">
+      <map>
+        <entry key="$USER_HOME$/Desktop/Capstone491/Defects4J/37/bug" value="true" />
+        <entry key="$USER_HOME$/Desktop/TestDebugger" value="true" />
+      </map>
+    </option>
+  </component>
+</application>

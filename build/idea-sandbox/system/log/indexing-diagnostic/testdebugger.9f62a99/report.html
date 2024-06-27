@@ -1,0 +1,102 @@
+<html><head><title>Indexing diagnostics of &#39;TestDebugger&#39;</title><style>body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table {
+  width: 80%;
+}
+
+table.two-columns td {
+  width: 50%;
+}
+
+th, td {
+  padding: 3px;
+}
+
+th {
+  background: lightgrey;
+}
+
+td {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+        
+.stats-content {
+  margin-left: 20%;
+}
+
+.aggregate-report-content {
+  margin-left: 10%;
+}
+
+.navigation-bar {
+  width: 15%;
+  background-color: lightgrey;
+  position: fixed;
+  height: 100%;
+}
+
+div.navigation-bar ul {
+  list-style-type: none;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+}
+
+div.navigation-bar ul li a, label {
+  display: block;
+  color: #000;
+  padding: 8px 20px;
+  text-decoration: none;
+}
+
+label input {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+div.navigation-bar ul li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+.minor-data {}
+
+.invisible {
+  display: none;
+}
+
+.jetbrains-logo {
+  width: 50%;
+  bottom: 5%;
+  position: absolute;
+  left: 20%;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.linkable-table-row:hover {
+  background: #f2f3ff;
+  outline: none;
+  cursor: pointer;
+}</style><script>document.addEventListener("DOMContentLoaded", () => {
+  const rows = document.getElementsByClassName("linkable-table-row")
+  for (const row of rows) {
+    const href = row.getAttribute("href")
+    row.addEventListener("click", () => {
+      window.open(href, "_blank");
+    });
+  }
+});</script></head><body><div class="aggregate-report-content"><h1>Project name</h1>TestDebugger<div><h1>Indexing history</h1><table class="centered-text"><caption style="caption-side: bottom; text-align: right; font-size: 14px">Hover for details</caption><thead><tr><th colspan="7">Time</th><th colspan="6">Files</th><th rowspan="2">IDE</th><th rowspan="2">Type</th></tr><tr><th>Started</th><th>Total</th><th>Creating iterators</th><th>Scanning</th><th>Indexing</th><th>Content loading</th><th>Finished</th><th>Providers</th><th>Scanned</th><th>Shared indexes (w/o content loading)</th><th>Scheduled for indexing</th><th>Shared indexes (content loaded)</th><th>Total indexed (shared indexes included)</th></tr></thead><tbody><tr class="linkable-table-row" href="diagnostic-2024-06-26-22-08-02.572.html"><td><strong>On project open</strong><br/>22:07:54 26 Jun.</td><td>8 s 356 ms</td><td>207 ms</td><td>7 s 993 ms</td><td>0</td><td>0</td><td>22:08:02 26 Jun.</td><td>8</td><td>44678</td><td>0</td><td>0</td><td>0</td><td>0</td><td>IC-222.4345.14</td><td>full on project open</td></tr><tr class="linkable-table-row" href="diagnostic-2024-06-26-21-23-06.212.html"><td><strong>On project open</strong><br/>21:22:59 26 Jun.</td><td>6 s 569 ms</td><td>14 ms</td><td>6 s 492 ms</td><td>0</td><td>0</td><td>21:23:06 26 Jun.</td><td>8</td><td>44678</td><td>0</td><td>0</td><td>0</td><td>0</td><td>IC-222.4345.14</td><td>full on project open</td></tr><tr class="linkable-table-row" href="diagnostic-2024-06-26-21-11-27.675.html"><td><strong>On project open</strong><br/>21:11:25 26 Jun.</td><td>1 s 986 ms</td><td>8 ms</td><td>1 s 759 ms</td><td>175 ms</td><td>6 ms</td><td>21:11:27 26 Jun.</td><td>8</td><td>44678</td><td>0</td><td>1</td><td>0</td><td>1</td><td>IC-222.4345.14</td><td>full on project open</td></tr><tr class="linkable-table-row" href="diagnostic-2024-06-26-21-00-15.714.html"><td><strong>On refresh of 239 files</strong><br/>21:00:14 26 Jun.</td><td>1 s 578 ms</td><td>0</td><td>77 ms</td><td>1 s 558 ms</td><td>110 ms</td><td>21:00:15 26 Jun.</td><td>1</td><td>239</td><td>0</td><td>239</td><td>0</td><td>239</td><td>IC-222.4345.14</td><td>refresh</td></tr><tr class="linkable-table-row" href="diagnostic-2024-06-26-21-00-14.010.html"><td><strong>Merged changes in: &quot;JDK 1.8&quot; with changes in: &quot;JDK 1.8&quot; with changes in: &quot;JDK 1.8&quot;</strong><br/>21:00:13 26 Jun.</td><td>944 ms</td><td>&lt; 1 ms</td><td>919 ms</td><td>0</td><td>0</td><td>21:00:14 26 Jun.</td><td>1</td><td>43857</td><td>0</td><td>0</td><td>0</td><td>0</td><td>IC-222.4345.14</td><td>partial</td></tr><tr class="linkable-table-row" href="diagnostic-2024-06-26-21-00-09.739.html"><td><strong>On project open</strong><br/>21:00:02 26 Jun.</td><td>7 s 256 ms</td><td>11 ms</td><td>7 s 179 ms</td><td>0</td><td>0</td><td>21:00:09 26 Jun.</td><td>8</td><td>44678</td><td>0</td><td>0</td><td>0</td><td>0</td><td>IC-222.4345.14</td><td>full on project open</td></tr><tr class="linkable-table-row" href="diagnostic-2023-12-20-00-09-27.923.html"><td><strong>changes in: &quot;Library JUnit4&quot;, &quot;Library junit.junit5.engine&quot;</strong><br/>00:09:27 20 Dec.</td><td>121 ms</td><td>&lt; 1 ms</td><td>92 ms</td><td>0</td><td>0</td><td>00:09:27 20 Dec.</td><td>2</td><td>560</td><td>0</td><td>0</td><td>0</td><td>0</td><td>IC-222.4345.14</td><td>partial</td></tr><tr class="linkable-table-row" href="diagnostic-2023-12-20-00-08-39.895.html"><td><strong>changes in: &quot;JDK 1.8&quot;</strong><br/>00:08:01 20 Dec.</td><td>38 s 175 ms</td><td>&lt; 1 ms</td><td>6 s 578 ms</td><td>31 s 517 ms</td><td>1 s 863 ms</td><td>00:08:39 20 Dec.</td><td>1</td><td>43857</td><td>0</td><td>43389</td><td>0</td><td>43389</td><td>IC-222.4345.14</td><td>partial</td></tr><tr class="linkable-table-row" href="diagnostic-2023-12-20-00-08-01.693.html"><td><strong>On project open</strong><br/>00:07:50 20 Dec.</td><td>11 s 172 ms</td><td>17 ms</td><td>3 s 562 ms</td><td>7 s 495 ms</td><td>345 ms</td><td>00:08:01 20 Dec.</td><td>7</td><td>820</td><td>0</td><td>798</td><td>0</td><td>798</td><td>IC-222.4345.14</td><td>full on project open</td></tr></tbody></table></div><div><h1>Scanning to push properties of changed files</h1><table><thead><tr><th>Time</th><th>Reason</th><th>Full duration</th><th>Is cancelled</th><th>Number</th></tr></thead><tbody><tr><td>00:16:00 20 Dec.</td><td>Push on VFS changes</td><td>14 ms</td><td>fully finished</td><td>1</td></tr><tr><td>00:15:26 20 Dec.</td><td>Push on VFS changes</td><td>5 ms</td><td>fully finished</td><td>1</td></tr><tr><td>00:13:19 20 Dec.</td><td>Push on VFS changes</td><td>10 ms</td><td>fully finished</td><td>1</td></tr></tbody></table></div></div></body></html>

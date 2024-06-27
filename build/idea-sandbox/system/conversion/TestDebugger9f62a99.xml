@@ -1,0 +1,13 @@
+<conversion>
+  <applied-converters>
+    <converter id="kotlin-non-jvm-source-roots" />
+  </applied-converters>
+  <project-files>
+    <f p="./.idea/libraries/junit_junit5_engine.xml" t="1684474118" />
+    <f p="./.idea/workspace.xml" t="1719462501" />
+    <f p="./.idea/modules.xml" t="1663008783" />
+    <f p="./.idea/uiDesigner.xml" t="1674025042" />
+    <f p="./.idea/misc.xml" t="1681025686" />
+    <f p="./TestDebugger.iml" t="1703059770" />
+  </project-files>
+</conversion>

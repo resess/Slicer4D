@@ -1,0 +1,204 @@
+2023-12-20 00:08:46,216 [      5]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:08:46,244 [     33]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:08:46,658 [    447]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 346 ms
+2023-12-20 00:08:46,898 [    687]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:08:47,227 [   1016]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 329 ms
+2023-12-20 00:08:47,228 [   1017]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:08:47,420 [   1209]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:08:47,688 [   1477]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:false; isMake:false parallel compilation:false
+2023-12-20 00:08:47,691 [   1480]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2023-12-20 00:08:47,692 [   1481]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2023-12-20 00:08:47,699 [   1488]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2023-12-20 00:08:47,700 [   1489]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started 147cecce
+2023-12-20 00:08:47,724 [   1513]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:08:47,728 [   1517]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:08:47,851 [   1640]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 10 ms
+2023-12-20 00:08:48,453 [   2242]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 47 ms
+2023-12-20 00:08:48,463 [   2252]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 64 ms
+2023-12-20 00:08:49,633 [   3422]   INFO - #o.j.j.i.j.JavaBuilder - Compiling 2 java files; module: TestDebugger
+2023-12-20 00:08:50,345 [   4134]   INFO - #o.j.j.i.Builder - Dependency analysis found 0 affected files
+2023-12-20 00:08:50,363 [   4152]   INFO - #o.j.j.i.j.JavaBuilder - javac 1.8.0_181 was used to compile [TestDebugger]
+2023-12-20 00:08:50,390 [   4179]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=0, pageFastCacheHits=1827, pageMisses=0, pageLoad=32, capacityInBytes=524288000, disposedBuffers=32 maxRegisteredFiles=46 maxCacheSizeInBytes=11632640
+2023-12-20 00:08:51,046 [      8]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:08:51,090 [     52]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:08:51,492 [    454]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 351 ms
+2023-12-20 00:08:51,892 [    854]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 368 ms
+2023-12-20 00:08:51,986 [    948]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:08:52,296 [   1258]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 310 ms
+2023-12-20 00:08:52,297 [   1259]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:08:52,444 [   1406]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:08:52,810 [   1772]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1765 ms
+2023-12-20 00:09:27,743 [  36705]   INFO - #o.j.j.c.BuildMain - Build canceled, but no build session is running. Exiting.
+2023-12-20 00:09:31,104 [      5]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:09:31,143 [     44]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:09:31,553 [    454]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 351 ms
+2023-12-20 00:09:31,703 [    604]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:09:31,958 [    859]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 254 ms
+2023-12-20 00:09:31,958 [    859]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:09:32,113 [   1014]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:09:32,284 [   1185]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:false; isMake:true parallel compilation:false
+2023-12-20 00:09:32,287 [   1188]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2023-12-20 00:09:32,288 [   1189]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2023-12-20 00:09:32,293 [   1194]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2023-12-20 00:09:32,294 [   1195]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started 746dec5b
+2023-12-20 00:09:32,308 [   1209]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:09:32,312 [   1213]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:09:32,395 [   1296]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 1 ms
+2023-12-20 00:09:32,682 [   1583]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 45 ms
+2023-12-20 00:09:32,692 [   1593]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 57 ms
+2023-12-20 00:09:33,359 [   2260]   INFO - #o.j.j.i.j.JavaBuilder - Compiling 2 java files; module: TestDebugger
+2023-12-20 00:09:33,969 [   2870]   INFO - #o.j.j.i.Builder - Dependency analysis found 0 affected files
+2023-12-20 00:09:34,079 [   2980]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Java' took 585 ms; 2 sources processed (292 ms per file)
+2023-12-20 00:09:34,080 [   2981]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Kotlin Builder' took 624 ms; 0 sources processed
+2023-12-20 00:09:34,087 [   2988]   INFO - #o.j.j.i.j.JavaBuilder - javac 1.8.0_181 was used to compile [TestDebugger]
+2023-12-20 00:09:34,123 [   3024]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=0, pageFastCacheHits=670, pageMisses=0, pageLoad=28, capacityInBytes=524288000, disposedBuffers=28 maxRegisteredFiles=25 maxCacheSizeInBytes=13828096
+2023-12-20 00:09:34,557 [      5]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:09:34,595 [     43]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:09:34,956 [    404]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 312 ms
+2023-12-20 00:09:35,085 [    533]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 107 ms
+2023-12-20 00:09:35,154 [    602]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:09:35,440 [    888]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 285 ms
+2023-12-20 00:09:35,441 [    889]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:09:35,560 [   1008]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:09:35,812 [   1260]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1255 ms
+2023-12-20 00:14:14,176 [ 279624]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:false; isMake:true parallel compilation:false
+2023-12-20 00:14:14,183 [ 279631]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2023-12-20 00:14:14,183 [ 279631]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2023-12-20 00:14:14,200 [ 279648]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2023-12-20 00:14:14,202 [ 279650]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started c31ce465
+2023-12-20 00:14:14,235 [ 279683]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:14:14,239 [ 279687]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:14:14,272 [ 279720]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 2 ms
+2023-12-20 00:14:14,505 [ 279953]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 44 ms
+2023-12-20 00:14:14,515 [ 279963]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 56 ms
+2023-12-20 00:14:14,569 [ 280017]   INFO - #o.j.j.i.Builder - Dependency analysis found 0 affected files
+2023-12-20 00:14:15,344 [ 280792]   INFO - #o.j.j.i.Builder - Dependency analysis found 0 affected files
+2023-12-20 00:14:15,379 [ 280827]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Kotlin Builder' took 693 ms; 0 sources processed
+2023-12-20 00:14:15,416 [ 280864]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=0, pageFastCacheHits=409, pageMisses=0, pageLoad=23, capacityInBytes=524288000, disposedBuffers=23 maxRegisteredFiles=25 maxCacheSizeInBytes=14974976
+2023-12-20 00:14:16,514 [      6]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:14:16,558 [     50]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:14:16,936 [    428]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 329 ms
+2023-12-20 00:14:17,126 [    618]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 164 ms
+2023-12-20 00:14:17,209 [    701]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:14:17,489 [    981]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 279 ms
+2023-12-20 00:14:17,490 [    982]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:14:17,616 [   1108]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:14:17,840 [   1332]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1326 ms
+2023-12-20 00:19:34,371 [ 317863]   INFO - #o.j.j.c.BuildMain - Build canceled, but no build session is running. Exiting.
+2023-12-20 00:21:16,938 [      4]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:21:16,985 [     51]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:21:17,473 [    539]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 416 ms
+2023-12-20 00:21:17,709 [    775]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/Capstone491/Defects4J/37/bug, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:21:17,991 [   1057]   INFO - #o.j.j.m.s.JpsProjectLoader - External project config dir is used: /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/system/external_build_system/bug.661cac9c/project
+2023-12-20 00:21:18,015 [   1081]   INFO - #o.j.j.m.s.JpsProjectLoader - External project config dir is used for modules: /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/system/external_build_system/bug.661cac9c/modules
+2023-12-20 00:21:18,075 [   1141]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 365 ms
+2023-12-20 00:21:18,077 [   1143]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:21:18,368 [   1434]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:21:18,694 [   1760]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:true; isMake:false parallel compilation:false
+2023-12-20 00:21:18,700 [   1766]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2023-12-20 00:21:18,702 [   1768]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2023-12-20 00:21:18,710 [   1776]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2023-12-20 00:21:18,710 [   1776]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started 33b425ce
+2023-12-20 00:21:18,742 [   1808]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2023-12-20 00:21:18,937 [   2003]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 33 ms
+2023-12-20 00:21:19,536 [   2602]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 42 ms
+2023-12-20 00:21:19,553 [   2619]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 62 ms
+2023-12-20 00:21:20,382 [   3448]   INFO - #o.j.j.i.j.JavaBuilder - Compiling 623 java files; module: bug
+2023-12-20 00:21:40,276 [  23342]   INFO - #o.j.j.i.j.JavaBuilder - Compiling 360 java files; module: bug (tests)
+2023-12-20 00:21:49,425 [  32491]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Backward references indexer' took 488 ms; 0 sources processed
+2023-12-20 00:21:49,434 [  32500]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'IntelliLang pattern validator' took 311 ms; 0 sources processed
+2023-12-20 00:21:49,435 [  32501]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Java' took 25 s 778 ms; 937 sources processed (27 ms per file)
+2023-12-20 00:21:49,435 [  32501]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Kotlin Builder' took 1 s 154 ms; 0 sources processed
+2023-12-20 00:21:49,435 [  32501]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Maven resources compiler' took 64 ms; 20 sources processed (3 ms per file)
+2023-12-20 00:21:49,435 [  32501]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'NotNull instrumentation' took 1 s 42 ms; 0 sources processed
+2023-12-20 00:21:49,435 [  32501]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Threading Model instrumentation' took 166 ms; 0 sources processed
+2023-12-20 00:21:49,441 [  32507]   INFO - #o.j.j.i.j.JavaBuilder - javac 1.8.0_181 was used to compile [bug]
+2023-12-20 00:21:49,490 [  32556]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=1405, pageFastCacheHits=203501, pageMisses=0, pageLoad=95, capacityInBytes=524288000, disposedBuffers=95 maxRegisteredFiles=99 maxCacheSizeInBytes=38830080
+2023-12-20 00:21:50,184 [      4]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:21:50,223 [     43]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:21:50,623 [    443]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 345 ms
+2023-12-20 00:21:50,798 [    618]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 150 ms
+2023-12-20 00:21:50,884 [    704]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/Capstone491/Defects4J/37/bug, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:21:51,157 [    977]   INFO - #o.j.j.m.s.JpsProjectLoader - External project config dir is used: /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/system/external_build_system/bug.661cac9c/project
+2023-12-20 00:21:51,171 [    991]   INFO - #o.j.j.m.s.JpsProjectLoader - External project config dir is used for modules: /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/system/external_build_system/bug.661cac9c/modules
+2023-12-20 00:21:51,228 [   1048]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 343 ms
+2023-12-20 00:21:51,230 [   1050]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:21:51,563 [   1383]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:21:51,816 [   1636]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1632 ms
+2023-12-20 00:24:12,920 [ 142740]   INFO - #o.j.j.i.IncProjectBuilder - Affected build targets count: 0
+2023-12-20 00:24:12,952 [ 142772]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:false; isMake:true parallel compilation:false
+2023-12-20 00:24:12,954 [ 142774]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2023-12-20 00:24:12,955 [ 142775]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2023-12-20 00:24:12,961 [ 142781]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2023-12-20 00:24:12,961 [ 142781]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started a51843ef
+2023-12-20 00:24:13,080 [ 142900]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 1 ms
+2023-12-20 00:24:13,177 [ 142997]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 34 ms
+2023-12-20 00:24:13,194 [ 143014]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 53 ms
+2023-12-20 00:24:14,014 [ 143834]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Kotlin Builder' took 742 ms; 0 sources processed
+2023-12-20 00:24:14,102 [ 143922]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=0, pageFastCacheHits=457, pageMisses=0, pageLoad=26, capacityInBytes=524288000, disposedBuffers=26 maxRegisteredFiles=58 maxCacheSizeInBytes=25231360
+2023-12-20 00:24:14,628 [      4]   INFO - #o.j.j.c.BuildMain - ==================================================
+2023-12-20 00:24:14,667 [     43]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2023-12-20 00:24:15,034 [    410]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 314 ms
+2023-12-20 00:24:15,212 [    588]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 155 ms
+2023-12-20 00:24:15,286 [    662]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/Capstone491/Defects4J/37/bug, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2023-12-20 00:24:15,514 [    890]   INFO - #o.j.j.m.s.JpsProjectLoader - External project config dir is used: /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/system/external_build_system/bug.661cac9c/project
+2023-12-20 00:24:15,525 [    901]   INFO - #o.j.j.m.s.JpsProjectLoader - External project config dir is used for modules: /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/system/external_build_system/bug.661cac9c/modules
+2023-12-20 00:24:15,581 [    957]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 294 ms
+2023-12-20 00:24:15,582 [    958]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2023-12-20 00:24:15,856 [   1232]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2023-12-20 00:24:16,069 [   1445]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1441 ms
+2023-12-20 00:27:17,572 [ 182948]   INFO - #o.j.j.c.BuildMain - Build canceled, but no build session is running. Exiting.
+2024-06-26 21:27:29,006 [      5]   INFO - #o.j.j.c.BuildMain - ==================================================
+2024-06-26 21:27:29,050 [     49]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2024-06-26 21:27:29,450 [    449]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 342 ms
+2024-06-26 21:27:29,634 [    633]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2024-06-26 21:27:29,901 [    900]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 266 ms
+2024-06-26 21:27:29,901 [    900]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2024-06-26 21:27:30,087 [   1086]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2024-06-26 21:27:30,278 [   1277]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:false; isMake:true parallel compilation:false
+2024-06-26 21:27:30,281 [   1280]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2024-06-26 21:27:30,282 [   1281]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2024-06-26 21:27:30,288 [   1287]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2024-06-26 21:27:30,289 [   1288]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started aaa3aede
+2024-06-26 21:27:30,310 [   1309]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2024-06-26 21:27:30,313 [   1312]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2024-06-26 21:27:30,361 [   1360]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 2 ms
+2024-06-26 21:27:30,696 [   1695]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 36 ms
+2024-06-26 21:27:30,706 [   1705]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 49 ms
+2024-06-26 21:27:31,787 [   2786]   INFO - #o.j.j.i.j.JavaBuilder - Compiling 1 java files; module: TestDebugger
+2024-06-26 21:27:32,517 [   3516]   INFO - #o.j.j.i.Builder - Dependency analysis found 0 affected files
+2024-06-26 21:27:32,592 [   3591]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Java' took 678 ms; 1 sources processed (678 ms per file)
+2024-06-26 21:27:32,592 [   3591]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Kotlin Builder' took 1 s 20 ms; 0 sources processed
+2024-06-26 21:27:32,599 [   3598]   INFO - #o.j.j.i.j.JavaBuilder - javac 1.8.0_181 was used to compile [TestDebugger]
+2024-06-26 21:27:32,621 [   3620]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=0, pageFastCacheHits=574, pageMisses=0, pageLoad=26, capacityInBytes=524288000, disposedBuffers=26 maxRegisteredFiles=25 maxCacheSizeInBytes=14942208
+2024-06-26 21:27:33,022 [      8]   INFO - #o.j.j.c.BuildMain - ==================================================
+2024-06-26 21:27:33,057 [     43]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2024-06-26 21:27:33,390 [    376]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 291 ms
+2024-06-26 21:27:33,658 [    644]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 244 ms
+2024-06-26 21:27:33,731 [    717]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2024-06-26 21:27:33,983 [    969]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 252 ms
+2024-06-26 21:27:33,984 [    970]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2024-06-26 21:27:34,105 [   1091]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2024-06-26 21:27:34,404 [   1390]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1382 ms
+2024-06-26 21:29:34,802 [ 121788]   INFO - #o.j.j.i.IncProjectBuilder - Building project; isRebuild:false; isMake:true parallel compilation:false
+2024-06-26 21:29:34,810 [ 121796]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JVM: true
+2024-06-26 21:29:34,813 [ 121799]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin incremental compilation enabled for JS: true
+2024-06-26 21:29:34,832 [ 121818]   INFO - #o.j.k.j.b.KotlinBuilder - is Kotlin compiler daemon enabled: true
+2024-06-26 21:29:34,833 [ 121819]   INFO - #o.j.k.j.b.KotlinBuilder - Label in local history: build started 55552110
+2024-06-26 21:29:34,886 [ 121872]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2024-06-26 21:29:34,891 [ 121877]   INFO - #o.j.j.b.i.CompilerReferenceIndex - backward reference index version doesn't exist
+2024-06-26 21:29:34,934 [ 121920]   INFO - #o.j.j.i.IncProjectBuilder - Cleaned output directories in 3 ms
+2024-06-26 21:29:35,167 [ 122153]   INFO - #o.j.k.j.b.KotlinBuilder - KotlinTargetsIndex created in 46 ms
+2024-06-26 21:29:35,179 [ 122165]   INFO - #o.j.k.j.b.KotlinBuilder - Total Kotlin global compile context initialization time: 60 ms
+2024-06-26 21:29:35,970 [ 122956]   INFO - #o.j.j.c.BuildSession - Build duration: Builder 'Kotlin Builder' took 732 ms; 0 sources processed
+2024-06-26 21:29:36,009 [ 122995]   INFO - #o.j.j.c.BuildSession - FilePageCache stats: pageHits=0, pageFastCacheHits=180, pageMisses=0, pageLoad=11, capacityInBytes=524288000, disposedBuffers=11 maxRegisteredFiles=22 maxCacheSizeInBytes=10518528
+2024-06-26 21:29:36,420 [      6]   INFO - #o.j.j.c.BuildMain - ==================================================
+2024-06-26 21:29:36,457 [     43]   INFO - #o.j.j.c.BuildMain - Build process started. Classpath: /Users/sahar1/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2022.2.3/2af6809be127f13b2a50a13e1987a8051feeed1a/ideaIC-2022.2.3/plugins/java/lib/jps-launcher.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar
+2024-06-26 21:29:36,809 [    395]   INFO - #o.j.j.c.BuildMain - Connection to IDE established in 302 ms
+2024-06-26 21:29:37,011 [    597]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 181 ms
+2024-06-26 21:29:37,089 [    675]   INFO - #o.j.j.c.JpsModelLoaderImpl - Loading model: project path = /Users/sahar1/Desktop/TestDebugger, global options path = /Users/sahar1/Documents/Github/2023_debugger_study/code/slicer4D/build/idea-sandbox/config/options
+2024-06-26 21:29:37,364 [    950]   INFO - #o.j.j.c.JpsModelLoaderImpl - Model loaded in 275 ms
+2024-06-26 21:29:37,365 [    951]   INFO - #o.j.j.c.JpsModelLoaderImpl - Project has 1 modules, 1 libraries
+2024-06-26 21:29:37,487 [   1073]   INFO - #c.i.u.i.FilePageCache - lower=100; upper=500; buffer=10; max=602
+2024-06-26 21:29:37,732 [   1318]   INFO - #o.j.j.c.BuildMain - Pre-loaded process ready in 1312 ms
+2024-06-26 21:39:36,174 [ 599760]   INFO - #o.j.j.c.BuildMain - Build canceled, but no build session is running. Exiting.

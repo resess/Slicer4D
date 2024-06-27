@@ -1,0 +1,66 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+  <version>0.1.1</version>
+  <idea-version since-build="222" until-build="223.*" />
+  <id>ca.ubc.ece.resess</id>
+  <name>Slicer4D</name>
+  <vendor email="example@example.com" url="https://www.example.com">Team 57</vendor>
+  <description>Seamless integration for Slicer4J with the debugger</description>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.java</depends>
+  <depends>com.intellij.modules.xdebugger</depends>
+  <depends>org.jetbrains.java.decompiler</depends>
+  <projectListeners>
+    <listener class="ca.ubc.ece.resess.listeners.DebuggerListener" topic="com.intellij.xdebugger.XDebuggerManagerListener" />
+    <listener class="ca.ubc.ece.resess.listeners.BreakpointListener" topic="com.intellij.xdebugger.breakpoints.XBreakpointListener" />
+  </projectListeners>
+  <extensionPoints>
+    <extensionPoint name="slicerExtensionPoint" interface="ca.ubc.ece.resess.slicer.SlicerExtensionPoint" />
+  </extensionPoints>
+  <extensions defaultExtensionNs="ca.ubc.ece.resess">
+    <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.DefaultSlicerExtensionPointImpl" />
+    <!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.TestSlicerJavaImpl"/>-->
+    <!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.TestSlicerExtensionPointImpl"/>-->
+    <!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.JavaSlicerCustom"/>-->
+    <!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.CustomSlicerJavaImpl"/>-->
+    <!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.CustomSlicerKotlinImpl"/>-->
+  </extensions>
+  <extensions defaultExtensionNs="com.intellij">
+    <executor implementation="ca.ubc.ece.resess.execute.DynamicSliceDebuggerExecutor" />
+    <programRunner implementation="ca.ubc.ece.resess.execute.DynamicSliceDebuggerRunner" />
+    <debugger.jvmSteppingCommandProvider implementation="ca.ubc.ece.resess.dbgcontroller.DppJvmSteppingCommandProvider" />
+    <notificationGroup id="SlicePlugin" displayType="BALLOON" toolWindowId="toolWindowSlice" />
+    <postStartupActivity implementation="ca.ubc.ece.resess.starters.ProjectOpener" />
+    <applicationConfigurable parentId="tools" instance="ca.ubc.ece.resess.settings.SlicerConfigurable" id="ca.ubc.ece.resess.settings.SlicerConfigurable" displayName="Slicer4D Settings" />
+    <applicationService serviceImplementation="ca.ubc.ece.resess.settings.PluginSettingsStateComponent" />
+  </extensions>
+  <actions>
+    <group id="ca.ubc.ece.resess.ui.SlicerActionGroup" class="ca.ubc.ece.resess.ui.SlicerActionGroup" popup="true" text="Select Slicing Tool" description="Use this tool to slice while inspecting failure" icon="com.intellij.icons.AllIcons.Actions.ListFiles">
+      <add-to-group group-id="EditorPopupMenu" anchor="last" />
+    </group>
+    <group>
+      <add-to-group group-id="EditorPopupMenu" anchor="last" />
+      <action id="ca.ubc.ece.resess.SelectSlicingCriterionAction" class="ca.ubc.ece.resess.ui.SelectSlicingCriterionAction" text="Select Slicing Criterion" description="Select the line as the slicing criterion for Slicer4J" icon="ca.ubc.ece.resess.ui.Icons.Logo" />
+      <action id="ca.ubc.ece.resess.EnableSlicingAction" class="ca.ubc.ece.resess.ui.SelectSlicingCriterionAction" text="Enable Grey Lining" description="Highlight the lines present in the slice" icon="com.intellij.icons.AllIcons.Actions.Words" />
+      <!--            <action id="ca.ubc.ece.resess.EnableSlicingAction"-->
+      <!--                    class="ca.ubc.ece.resess.ui.EnableSlicingAction"-->
+      <!--                    text="Enable Slicing"-->
+      <!--                    description="Enable or disable slicing">-->
+      <!--            </action>-->
+      <!--            <action id="ca.ubc.ece.resess.UploadSliceAction"-->
+      <!--                    class="ca.ubc.ece.resess.ui.UploadSliceAction"-->
+      <!--                    text="Upload Slice"-->
+      <!--                    description="Upload a JSON file for slicing">-->
+      <!--            </action>-->
+      <!--            <action id="ca.ubc.ece.resess.SaveSliceAction"-->
+      <!--                    class="ca.ubc.ece.resess.ui.SaveSliceAction"-->
+      <!--                    text="Save Slice"-->
+      <!--                    description="Save ProgramSlice as JSON">-->
+      <!--            </action>-->
+      <separator />
+    </group>
+    <group id="ca.ubc.ece.resess.ui.SliceMenu" text="Slicer4D menu" popup="true" class="ca.ubc.ece.resess.ui.SliceMenu" icon="com.intellij.icons.AllIcons.Actions.MenuCut">
+      <add-to-group group-id="RunnerActions" anchor="last" />
+    </group>
+  </actions>
+</idea-plugin>

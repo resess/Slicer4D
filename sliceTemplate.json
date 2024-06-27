@@ -1,0 +1,63 @@
+{
+  // Remove All comments before uploading slice
+  // Do not remove any key, let it be empty if not required
+  "sliceLinesUnordered": {
+    "Example": [
+      // NOTE: Only in this list- Line numbers are 0 indexed, Line 1 in IDE means line 0 in the map, and so on
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "dependencies": {
+    "Example:5": { // here SourceLocation is represented as clazz:lineNo
+      "data": {
+        "from": [
+          {
+            "variableName": "",
+            "location": {
+              "clazz": "Example",
+              "lineNo": 4
+            }
+          }
+        ],
+        "to": [
+          {
+            "variableName": "",
+            "location": {
+              "clazz": "Example",
+              "lineNo": 9
+            }
+          }
+        ]
+      },
+      "control": {
+        "from": [],
+        "to": []
+      }
+    },
+    "Example:6": {
+      "data": {
+        "from": [
+          {
+            "variableName": "",
+            "location": {
+              "clazz": "Example",
+              "lineNo": 4
+            }
+          }
+        ],
+        "to": []
+      },
+      "control": {
+        "from": [],
+        "to": []
+      }
+    }
+  },
+  "firstLine": {
+    "clazz": "Example",
+    "lineNo": 2
+  }
+}

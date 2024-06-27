@@ -1,0 +1,40 @@
+<application>
+  <component name="RecentProjectsManager">
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/Desktop/TestDebugger">
+          <value>
+            <RecentProjectMetaInfo frameTitle="TestDebugger – testSlicer4D.java" opened="true" projectWorkspaceId="2EgEM14vzCRwa64KPIyr1NmH7WL">
+              <option name="activationTimestamp" value="1719465210872" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="build" value="IC-222.4345.14" />
+              <option name="buildTimestamp" value="1664946097136" />
+              <frame x="0" y="37" width="1512" height="945" fullScreen="true" />
+              <option name="productionCode" value="IC" />
+              <option name="projectOpenTimestamp" value="1719464869588" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="groups">
+      <list>
+        <ProjectGroup>
+          <option name="bottomGroup" value="true" />
+          <option name="name" value="Eclipse Projects" />
+          <option name="projects">
+            <list>
+              <option value="$USER_HOME$/jpf-original/jdart" />
+              <option value="$USER_HOME$/eclipse-workspace/bug" />
+              <option value="$USER_HOME$/eclipse-workspace/fix" />
+              <option value="$USER_HOME$/jpf-original/jpf-shadow" />
+              <option value="$USER_HOME$/jpf-original/jpf-core" />
+              <option value="$USER_HOME$/jpf-original/jpf-symbc" />
+            </list>
+          </option>
+        </ProjectGroup>
+      </list>
+    </option>
+    <option name="lastOpenedProject" value="$USER_HOME$/Desktop/TestDebugger" />
+  </component>
+</application>

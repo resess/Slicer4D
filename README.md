@@ -97,18 +97,6 @@ For the unit tests, run `./gradlew test` in the project root directory.
 
 For the integration test, open the Slicer4D repository in IntelliJ IDEA, and make sure you build Gradle correctly. Next, open the test repository by running the `runIdeForUiTest` command. Finally, visit `src/test/java/ca/ubc/ece/resess/dbgcontroller/pages/UITest.java` to run the test.
 
-## 6. Authors and acknowledgment
- 
-
-Khaled Ahmed, Mieszko Lis, and Julia Rubin. Slicer4J: A Dynamic Slicer for Java. The ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE), 2021. <bibtex>
-
-
-## 7. Ideas for Future Development 
-- Change the dependencies graph to be clickable to allow a user to jump back to the debugging session state at which the graph node was added
-- Change the dependencies graph to have toggle-able dropdowns for each level, and optionally remove the control and data dependencies tabs which only showcase direct and not transitive dependencies (1st level of the graph)
-- Map the Jimple statements to the source code and show nodes at the source code level in the graph
-- Get dependencies (control/data/graph etc.) from the statement instance level, using the current state of execution
-- Do instrumentation at the start of the IDE; do slicing on starting the debugging session
 
 ## Add custom slicer
 - Steps -

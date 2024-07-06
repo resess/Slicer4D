@@ -2,7 +2,7 @@ package ca.ubc.ece.resess.slicer
 
 import ca.ubc.ece.resess.slicer.dynamic.core.slicer.DynamicSlice
 import ca.ubc.ece.resess.slicer.dynamic.core.slicer.SlicePrinter
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.intellij.openapi.application.ReadAction
@@ -49,8 +49,8 @@ class ProgramSlice(
     }
 
     val sliceLinesUnordered: Map<String, Set<Int>> by lazy { sliceData.sliceLinesUnordered }
-    val dependencies: Map<SourceLocation, Dependencies> by lazy { sliceData.dependencies }
-    val firstLine: SourceLocation? by lazy { sliceData.firstLine }
+    val dependencies: Map<Statement, Dependencies> by lazy { sliceData.dependencies }
+    val firstLine: Statement? by lazy { sliceData.firstLine }
 //    val dotGraphFile: File by lazy { sliceData.dotGraphFile }
 //    val sliceLogFile: File by lazy { sliceData.sliceLogFile }
     private fun loadSliceDataFromFile(filePath: String): SerializedProgramSlice {
@@ -64,7 +64,7 @@ class ProgramSlice(
         val sliceLinesUnordered = deserializedData.sliceLinesUnordered
         val dependencies = deserializedData.dependencies.mapKeys { entry ->
             val (clazz, lineNo) = entry.key.split(":")
-            SourceLocation(clazz, lineNo.toInt())
+            Statement(clazz, lineNo.toInt())
         }
         val firstLine = deserializedData.firstLine
 //        val dotGraphFile = deserializedData.dotGraphFile
@@ -121,14 +121,14 @@ class ProgramSlice(
             return@compute map
         }
     }
-    private fun createDependenciesMap(): Map<SourceLocation, Dependencies> {
-        val map = HashMap<SourceLocation, Dependencies>()
-        val entriesSeen = HashSet<Triple<String, SourceLocation, SourceLocation>>()
+    private fun createDependenciesMap(): Map<Statement, Dependencies> {
+        val map = HashMap<Statement, Dependencies>()
+        val entriesSeen = HashSet<Triple<String, Statement, Statement>>()
         for (entry in dynamicSlice) {
             val fromNode = entry.o1.o1
             val toNode = entry.o2.o1
-            val fromLocation = SourceLocation(fromNode.javaSourceFile, fromNode.javaSourceLineNo)
-            val toLocation = SourceLocation(toNode.javaSourceFile, toNode.javaSourceLineNo)
+            val fromLocation = Statement(fromNode.javaSourceFile, fromNode.javaSourceLineNo)
+            val toLocation = Statement(toNode.javaSourceFile, toNode.javaSourceLineNo)
             val type = dynamicSlice.getEdges(entry.o1.o1.lineNo, entry.o2.o1.lineNo)
             if (!entriesSeen.add(Triple(type, fromLocation, toLocation)))
                 continue
@@ -155,9 +155,9 @@ class ProgramSlice(
         return map
     }
 
-    private fun findFirstLine(): SourceLocation? {
+    private fun findFirstLine(): Statement? {
         return dynamicSlice.order.getOrNull(0)?.o1?.let {
-            SourceLocation(it.javaSourceFile, it.javaSourceLineNo - 1)
+            Statement(it.javaSourceFile, it.javaSourceLineNo - 1)
         }
     }
     fun saveToFile(filePath: String) {
@@ -173,14 +173,14 @@ class ProgramSlice(
 
 data class SerializedProgramSlice(
     val sliceLinesUnordered: Map<String, Set<Int>>,
-    val dependencies: Map<SourceLocation, Dependencies>,
-    val firstLine: SourceLocation?
+    val dependencies: Map<Statement, Dependencies>,
+    val firstLine: Statement?
 )
 
 data class DeserializedProgramSlice(
     val sliceLinesUnordered: Map<String, Set<Int>>,
     val dependencies: Map<String, Dependencies>,
-    val firstLine: SourceLocation?
+    val firstLine: Statement?
 )
 
 class Dependencies(
@@ -207,14 +207,14 @@ class ControlDependencies(
     override fun hashCode() = Objects.hash(from, to)
 }
 
-abstract class Dependency(val location: SourceLocation) {
+abstract class Dependency(val location: Statement) {
     override fun equals(other: Any?) = (other is Dependency) && location == other.location
     override fun hashCode() = location.hashCode()
 }
 
-class ControlDependency(location: SourceLocation) : Dependency(location)
+class ControlDependency(location: Statement) : Dependency(location)
 
-class DataDependency(location: SourceLocation, val variableName: String) : Dependency(location) {
+class DataDependency(location: Statement, val variableName: String) : Dependency(location) {
     override fun equals(other: Any?) = (other is DataDependency)
             && location == other.location && variableName == other.variableName
 

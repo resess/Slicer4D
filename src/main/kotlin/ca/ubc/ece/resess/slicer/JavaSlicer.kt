@@ -29,7 +29,7 @@ import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.util.io.write
 import org.jetbrains.java.decompiler.IdeaDecompiler
 import soot.Type
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Utils
 import java.io.BufferedInputStream
 import java.io.File
@@ -179,7 +179,7 @@ class JavaSlicer {
         return graph
     }
 
-    fun locateSlicingCriteria(graph: DynamicControlFlowGraph, criteria: SourceLocation): List<StatementInstance> {
+    fun locateSlicingCriteria(graph: DynamicControlFlowGraph, criteria: Statement): List<StatementInstance> {
         return graph.mapNumberUnits.values
             .filter { statement -> statement.javaSourceFile == criteria.clazz && statement.javaSourceLineNo == criteria.lineNo }
             .toList()

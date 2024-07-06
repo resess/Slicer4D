@@ -1,7 +1,7 @@
 package ca.ubc.ece.resess.slicer
 
 import ca.ubc.ece.resess.ui.SelectSlicingCriterionAction
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import com.intellij.execution.Executor
 import com.intellij.execution.RunnerAndConfigurationSettings
 import com.intellij.execution.runners.ExecutionEnvironmentBuilder
@@ -42,7 +42,7 @@ class JavaSlicerCustom : SlicerExtensionPoint {
         return SerializedProgramSlice(sliceLinesUnordered,dependencies,firstLine)
     }
 
-    private fun createSliceLinesUnordered(classPath: String, slicingCriteriaLocation: SourceLocation?): Map<String, Set<Int>> {
+    private fun createSliceLinesUnordered(classPath: String, slicingCriteriaLocation: Statement?): Map<String, Set<Int>> {
         val map = HashMap<String, MutableSet<Int>>()
         try {
             val arg = classPath+"#"+slicingCriteriaLocation!!.lineNo.toString()
@@ -65,8 +65,8 @@ class JavaSlicerCustom : SlicerExtensionPoint {
         return map
     }
 
-    private fun createDependenciesMap(slicingCriteriaLocation: SourceLocation?): Map<SourceLocation, Dependencies> {
-        val map = HashMap<SourceLocation, Dependencies>()
+    private fun createDependenciesMap(slicingCriteriaLocation: Statement?): Map<Statement, Dependencies> {
+        val map = HashMap<Statement, Dependencies>()
         /*
         Add Dependencies in the map.
         Refer end of template for definition of Dependencies class
@@ -74,7 +74,7 @@ class JavaSlicerCustom : SlicerExtensionPoint {
         return map
     }
 
-    private fun getFirstLine(slicingCriteriaLocation: SourceLocation?): SourceLocation? {
+    private fun getFirstLine(slicingCriteriaLocation: Statement?): Statement? {
         val clazz = ""
         val lineNumber = 0
         /*
@@ -82,7 +82,7 @@ class JavaSlicerCustom : SlicerExtensionPoint {
         Return the sourceLocation of the first line in slice.
         Refer end of template for definition of SourceLocation class
         */
-        return SourceLocation(clazz,lineNumber)
+        return Statement(clazz,lineNumber)
     }
 }
 
@@ -144,7 +144,7 @@ class DataDependency(location: SourceLocation, val variableName: String) : Depen
 
 private fun getSlicingCriteria(settings: RunnerAndConfigurationSettings?,
                                dataContext: DataContext,
-                               executor: Executor): SourceLocation? {
+                               executor: Executor): Statement? {
     val builder = (if (settings == null) null else ExecutionEnvironmentBuilder.createOrNull(executor, settings))
         ?: return null
     val env = builder.activeTarget().dataContext(dataContext).build()

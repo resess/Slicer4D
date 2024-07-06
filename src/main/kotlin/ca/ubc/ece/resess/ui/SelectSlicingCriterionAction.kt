@@ -3,7 +3,6 @@ package ca.ubc.ece.resess.ui
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.RunManager
 import com.intellij.execution.actions.RunConfigurationsComboBoxAction
-import com.intellij.ide.highlighter.JavaFileType
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -15,16 +14,16 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.util.PsiTreeUtil
 import ca.ubc.ece.resess.execute.DynamicSliceDebuggerExecutor
 import ca.ubc.ece.resess.execute.RunCurrentFile
-import ca.ubc.ece.resess.slicer.DefaultSlicerExtensionPointImpl
 import ca.ubc.ece.resess.slicer.ProgramSlice
+import ca.ubc.ece.resess.slicer.Slicer4JWrapper
 import ca.ubc.ece.resess.slicer.dynamic.core.slicer.DynamicSlice
-import ca.ubc.ece.resess.util.SourceLocation
-import ca.ubc.ece.resess.ui.SlicerActionGroup
+import ca.ubc.ece.resess.slicer.WrapperManager
+import ca.ubc.ece.resess.util.Statement
 
 class SelectSlicingCriterionAction : AnAction() {
     companion object {
         private val LOG = Logger.getInstance(SelectSlicingCriterionAction::class.java)
-        val SLICING_CRITERIA_KEY = Key.create<SourceLocation>("debuggerpp.slicing-criteria")
+        val SLICING_CRITERIA_KEY = Key.create<Statement>("debuggerpp.slicing-criteria")
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {
@@ -54,10 +53,10 @@ class SelectSlicingCriterionAction : AnAction() {
         val fileName = e.getData(CommonDataKeys.VIRTUAL_FILE)?.name
         println("File Name is $fileName")
         LOG.info("Class Name is ${clazz.qualifiedName}")
-        startSliceDebugger(e, SourceLocation(clazz.qualifiedName!!, lineNo))
+        startSliceDebugger(e, Statement(clazz.qualifiedName!!, lineNo, e))
     }
 
-    private fun startSliceDebugger(e: AnActionEvent, criteria: SourceLocation) {
+    private fun startSliceDebugger(e: AnActionEvent, criteria: Statement) {
         val project = e.project!!
         var selectedConfig = RunManager.getInstance(project).selectedConfiguration
         if (selectedConfig == null && RunConfigurationsComboBoxAction.hasRunCurrentFileItem(project)) {
@@ -69,17 +68,19 @@ class SelectSlicingCriterionAction : AnAction() {
 
         // To be retrieved later in com.intellij.openapi.progress.Task.WithResult#getProgramSlice
         (e.dataContext as UserDataHolder).putUserData(SLICING_CRITERIA_KEY, criteria)
+        //TODO(change with getWrapper)
+        WrapperManager.testWrapper.setSlicingCriterion(criteria)
 
 
         // Compute slice
-        val slicer = DefaultSlicerExtensionPointImpl.getCurrentSlicer()
+        val slicer = WrapperManager.getCurrentWrapper()
         val serializedProgramSlice = slicer.createSlice(project, selectedConfig, e.dataContext, DynamicSliceDebuggerExecutor.instance!!)
         val programSlice = ProgramSlice(dynamicSlice = DynamicSlice(), serializedProgramSlice = serializedProgramSlice)
         ProgramSlice.setcurrentProgramSlice(programSlice)
 
         //If EnableSlicing, perform line greying
         if(EnableSlicingAction.isSlicingEnabled){
-            val sliceVisualizer = EditorSliceVisualizer(project, programSlice)
+            val sliceVisualizer = EditorSliceVisualizer(e.project!!)
             sliceVisualizer.start()
         }
 

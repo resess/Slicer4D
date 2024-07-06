@@ -22,7 +22,7 @@ import ca.ubc.ece.resess.ui.Icons
 import ca.ubc.ece.resess.ui.dependencies.ControlDependenciesPanel
 import ca.ubc.ece.resess.ui.dependencies.DataDependenciesPanel
 //import ca.ubc.ece.resess.ui.dependencies.GraphPanel
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import javax.swing.JComponent
 
 
@@ -37,7 +37,7 @@ class DebuggerListener : XDebuggerManagerListener {
         }
         val session: XDebugSession = debugProcess.session
         val project = session.project
-        val sliceVisualizer = EditorSliceVisualizer(project, debugProcess.slice)
+        val sliceVisualizer = EditorSliceVisualizer(project)
         val dataDepPanel = DataDependenciesPanel(project)
         val controlDepPanel = ControlDependenciesPanel(project)
 //        val graphPanel = GraphPanel()
@@ -103,7 +103,7 @@ class DebuggerListener : XDebuggerManagerListener {
         val element = file.findElementAt(currentPosition.offset)
         val className = PsiTreeUtil.getParentOfType(element, PsiClass::class.java)?.qualifiedName
         // Get dependencies
-        val location = className?.let { SourceLocation(it, currentPosition.line + 1) }
+        val location = className?.let { Statement(it, currentPosition.line + 1) }
         val dependencies = slice.dependencies[location]
         val dataDependencies = dependencies?.data
         val controlDependencies = dependencies?.control

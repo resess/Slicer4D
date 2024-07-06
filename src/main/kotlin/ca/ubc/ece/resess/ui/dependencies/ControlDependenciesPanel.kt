@@ -3,11 +3,11 @@ package ca.ubc.ece.resess.ui.dependencies
 import ca.ubc.ece.resess.slicer.ControlDependencies
 import ca.ubc.ece.resess.slicer.ControlDependency
 import com.intellij.openapi.project.Project
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 
 
 class ControlDependenciesPanel(project: Project) : DependenciesPanel(project) {
-    fun updateDependencies(dependencies: ControlDependencies?, location: SourceLocation?) {
+    fun updateDependencies(dependencies: ControlDependencies?, location: Statement?) {
         removeAll()
         if (dependencies == null) {
             addNoDependenciesMessage("Control")

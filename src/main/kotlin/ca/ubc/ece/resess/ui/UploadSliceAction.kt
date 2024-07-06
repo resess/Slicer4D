@@ -31,7 +31,7 @@ class UploadSliceAction : AnAction("Upload Slice") {
             //If EnableSlicing, perform line greying
             if(EnableSlicingAction.isSlicingEnabled){
                 val programSlice=ProgramSlice.getcurrentProgramSlice()
-                val sliceVisualizer = programSlice?.let { EditorSliceVisualizer(project, it) }
+                val sliceVisualizer = EditorSliceVisualizer(project)
                 sliceVisualizer?.start()
             }
         } catch (e: Exception) {

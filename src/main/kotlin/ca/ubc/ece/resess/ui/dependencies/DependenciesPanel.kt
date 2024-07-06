@@ -4,7 +4,7 @@ import ca.ubc.ece.resess.slicer.ControlDependency
 import ca.ubc.ece.resess.slicer.DataDependency
 import ca.ubc.ece.resess.slicer.Dependency
 import ca.ubc.ece.resess.slicer.ProgramSlice
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Utils
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
@@ -45,7 +45,7 @@ abstract class DependenciesPanel(protected val project: Project) : JPanel() {
         border = BorderFactory.createEmptyBorder(0, 10, 0, 10)
     }
 
-    protected fun addTitleLabel(location: SourceLocation) {
+    protected fun addTitleLabel(location: Statement) {
         val l = JButton()
 
         val (displayName, lineText) = getLineButtonInfo(l, location)
@@ -206,7 +206,7 @@ abstract class DependenciesPanel(protected val project: Project) : JPanel() {
         return l
     }
 
-    private fun getLineButtonInfo(button: JButton, location: SourceLocation): Array<String> {
+    private fun getLineButtonInfo(button: JButton, location: Statement): Array<String> {
         var displayName = ""
         var lineText = ""
 

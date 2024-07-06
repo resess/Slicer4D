@@ -6,7 +6,7 @@ import ca.ubc.ece.resess.slicer.dynamic.slicer4j.Slicer
 import com.intellij.util.io.exists
 import com.intellij.util.io.readText
 import junit.framework.TestCase
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Utils
 import java.io.BufferedInputStream
 import java.io.FileInputStream
@@ -51,7 +51,7 @@ abstract class SlicerTest : TestCase() {
     private val icdgLog = outputDirectory.resolve("icdg.log")
 
     protected fun runTest(
-        jarPathName: String, slicingFromLine: SourceLocation,
+        jarPathName: String, slicingFromLine: Statement,
         expectedRawTrace: String?, expectedSliceLog: String?, expectedDependenciesLogSha256: String?
     ): DynamicSlice {
         val jarPath = this.javaClass.classLoader.getResource(jarPathName)!!.path

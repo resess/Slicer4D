@@ -7,7 +7,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.DumbService
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Utils
 
 class BreakPointController(private val debugProcess: DebugProcessImpl) {
@@ -15,7 +15,7 @@ class BreakPointController(private val debugProcess: DebugProcessImpl) {
         private val LOG = Logger.getInstance(BreakPointController::class.java)
     }
 
-    fun addBreakpoint(location: SourceLocation) {
+    fun addBreakpoint(location: Statement) {
         val project = debugProcess.project
         val psiFile = DumbService.getInstance(project).computeWithAlternativeResolveEnabled<PsiFile, Exception> {
             Utils.findPsiFile(location.clazz, project)

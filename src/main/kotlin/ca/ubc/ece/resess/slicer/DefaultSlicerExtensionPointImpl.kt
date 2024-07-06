@@ -15,20 +15,6 @@ import com.intellij.openapi.util.UserDataHolder
 import java.nio.file.Path
 
 class DefaultSlicerExtensionPointImpl : SlicerExtensionPoint {
-    companion object {
-        @JvmStatic
-        private var currentSlicer: SlicerExtensionPoint = DefaultSlicerExtensionPointImpl()
-
-        @JvmStatic
-        fun getCurrentSlicer(): SlicerExtensionPoint {
-            return currentSlicer
-        }
-
-        @JvmStatic
-        fun setCurrentSlicer(slicer: SlicerExtensionPoint) {
-            currentSlicer = slicer
-        }
-    }
 
     private val slicer = JavaSlicer()
     override val displayName = "Slicer4J"

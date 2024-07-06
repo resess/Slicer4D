@@ -13,7 +13,7 @@ import com.intellij.xdebugger.impl.actions.XDebuggerActions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ca.ubc.ece.resess.slicer.ProgramSlice;
-import ca.ubc.ece.resess.util.SourceLocation;
+import ca.ubc.ece.resess.util.Statement;
 import ca.ubc.ece.resess.util.Utils;
 
 import java.util.Set;
@@ -33,7 +33,7 @@ public class DppJavaDebugProcess extends JavaDebugProcess {
     public static DppJavaDebugProcess create(@NotNull final XDebugSession session, @NotNull final DebuggerSession javaSession, ProgramSlice slice) {
         DppJavaDebugProcess res = new DppJavaDebugProcess(session, javaSession, slice);
         javaSession.getProcess().setXDebugProcess(res);
-        SourceLocation firstLine = slice.getFirstLine();
+        Statement firstLine = slice.getFirstLine();
         if (firstLine != null) {
             res.breakPointController.addBreakpoint(firstLine);
         }

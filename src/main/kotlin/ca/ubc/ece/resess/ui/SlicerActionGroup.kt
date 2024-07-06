@@ -1,7 +1,7 @@
 package ca.ubc.ece.resess.ui
 
-import ca.ubc.ece.resess.slicer.DefaultSlicerExtensionPointImpl
 import ca.ubc.ece.resess.slicer.SlicerExtensionPoint
+import ca.ubc.ece.resess.slicer.WrapperManager
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.extensions.ExtensionPointName
@@ -17,7 +17,7 @@ class SlicerActionGroup : ActionGroup() {
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         val slicerExtensions = ExtensionPointName<SlicerExtensionPoint>("ca.ubc.ece.resess.slicerExtensionPoint").extensions
-        var currentSlicer = DefaultSlicerExtensionPointImpl.getCurrentSlicer()
+        var currentSlicer = WrapperManager.getCurrentWrapper()
 
         val children = mutableListOf<AnAction>()
 
@@ -31,7 +31,7 @@ class SlicerActionGroup : ActionGroup() {
                 override fun actionPerformed(e: AnActionEvent) {
                     // Set the selected slicer as the active slicer
                     isSlicerSelected = !isSlicerSelected
-                    DefaultSlicerExtensionPointImpl.setCurrentSlicer(slicer)
+                    WrapperManager.setCurrentWrapper(slicer)
                     currentSlicer = slicer
                     e.presentation.icon = AllIcons.Diff.GutterCheckBoxSelected
                     val message =
@@ -51,7 +51,6 @@ class SlicerActionGroup : ActionGroup() {
 
         // Add "Add Slicer" action
         children.add(AddSlicerAction())
-e
         return children.toTypedArray()
     }
 }

@@ -3,10 +3,10 @@ package ca.ubc.ece.resess.ui.dependencies
 import ca.ubc.ece.resess.slicer.DataDependencies
 import ca.ubc.ece.resess.slicer.DataDependency
 import com.intellij.openapi.project.Project
-import ca.ubc.ece.resess.util.SourceLocation
+import ca.ubc.ece.resess.util.Statement
 
 class DataDependenciesPanel(project: Project) : DependenciesPanel(project) {
-    fun updateDependencies(dependencies: DataDependencies?, location: SourceLocation?) {
+    fun updateDependencies(dependencies: DataDependencies?, location: Statement?) {
         removeAll()
         if (dependencies == null) {
             addNoDependenciesMessage("Data")

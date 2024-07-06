@@ -1,12 +1,9 @@
 package ca.ubc.ece.resess.ui
 
-import ca.ubc.ece.resess.slicer.ProgramSlice
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.ToggleAction
 import com.intellij.openapi.project.Project
-import ca.ubc.ece.resess.ui.SlicerActionGroup
 
 
 class EnableSlicingAction : ToggleAction("Enable Slicing") {
@@ -34,14 +31,14 @@ class EnableSlicingAction : ToggleAction("Enable Slicing") {
 
     private fun enableSlicing(project: Project) {
         // If ProgramSlice is not null, enable line greying
-        val sliceVisualizer = ProgramSlice.getcurrentProgramSlice()?.let { EditorSliceVisualizer(project, it) }
-        sliceVisualizer?.start()
+//        val sliceVisualizer = ProgramSlice.getcurrentProgramSlice()?.let { EditorSliceVisualizer(project, it) }
+        EditorSliceVisualizer(project).start()
     }
 
     private fun disableSlicing(project: Project) {
         // Disable line greying
-        val sliceVisualizer = ProgramSlice.getcurrentProgramSlice()?.let { EditorSliceVisualizer(project, it) }
-        sliceVisualizer?.stop()
+//        val sliceVisualizer = ProgramSlice.getcurrentProgramSlice()?.let { EditorSliceVisualizer(project, it) }
+        EditorSliceVisualizer(project).stop()
     }
 
     override fun update(e: AnActionEvent) {

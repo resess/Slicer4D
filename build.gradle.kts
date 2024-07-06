@@ -51,6 +51,10 @@ tasks {
         kotlinOptions.jvmTarget = "11"
     }
 
+    named<Jar>("jar") {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+
     patchPluginXml {
         sinceBuild.set("222")
         untilBuild.set("223.*")

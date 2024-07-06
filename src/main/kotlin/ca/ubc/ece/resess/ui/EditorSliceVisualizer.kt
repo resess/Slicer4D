@@ -17,10 +17,16 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.PsiManager
 import com.intellij.ui.Gray
-import ca.ubc.ece.resess.slicer.ProgramSlice
+import ca.ubc.ece.resess.slicer.WrapperManager
+import ca.ubc.ece.resess.util.Statement
+import com.intellij.psi.PsiDocumentManager
+import com.intellij.psi.PsiIfStatement
+import com.intellij.psi.util.parents
+import com.intellij.refactoring.suggested.endOffset
+import com.intellij.refactoring.suggested.startOffset
 
 
-class EditorSliceVisualizer(private val project: Project, private val slice: ProgramSlice) {
+class EditorSliceVisualizer(private val project: Project) {
     companion object {
         private val LOG = Logger.getInstance(EditorSliceVisualizer::class.java)
         private val greyOutAttributes = TextAttributes()
@@ -112,16 +118,38 @@ class EditorSliceVisualizer(private val project: Project, private val slice: Pro
             return
         }
 
-        val sliceLines = HashSet<Int>()
-        for (clazz in file.classes) {
-            slice.sliceLinesUnordered[clazz.qualifiedName]?.let { lines ->
-                sliceLines.addAll(lines)
+        val wrapper = WrapperManager.testWrapper
+        val toIgnore = ArrayList<Int>()
+
+        for (line in 0 until textEditor.editor.document.lineCount) {
+            for (clazz in file.classes) {
+                if (wrapper.isInSlice(Statement(clazz.qualifiedName!!, line))){
+                    //add lines of enclosing methods to ignore list
+                    val documentManager = PsiDocumentManager.getInstance(project)
+                    val document = file.let { documentManager.getDocument(file) }
+                    if (document != null) {
+                        val lineOffset = (document.getLineStartOffset(line) + document.getLineEndOffset(line)) / 2
+                        val element = file.findElementAt(lineOffset)
+                        element?.parents(false)
+                            ?.forEach {
+                                if (it !is PsiIfStatement) {
+                                    toIgnore.add(document.getLineNumber(it.startOffset))
+                                    toIgnore.add(document.getLineNumber(it.endOffset))
+                                }
+                            }
+                    }
+
+                    //add line in slice to ignore list
+                    toIgnore.add(line)
+                }
             }
         }
 
+        // Grey out all lines that are not in the slice or enclosing methods; done twice bcz not it order above
         for (line in 0 until textEditor.editor.document.lineCount) {
-            if (sliceLines.contains(line))
+            if (toIgnore.contains(line)) {
                 continue
+            }
             textEditor.editor.markupModel.addLineHighlighter(
                 line,
                 HighlighterLayer.SELECTION + 1,

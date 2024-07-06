@@ -1,7 +1,7 @@
 package ca.ubc.ece.resess.slicer;
 
 import ca.ubc.ece.resess.ui.SelectSlicingCriterionAction;
-import ca.ubc.ece.resess.util.SourceLocation;
+import ca.ubc.ece.resess.util.Statement;
 import com.intellij.execution.Executor;
 import com.intellij.execution.RunnerAndConfigurationSettings;
 import com.intellij.execution.runners.ExecutionEnvironment;
@@ -33,16 +33,16 @@ public class CustomSlicerJavaImpl implements SlicerExtensionPoint {
         }
         ExecutionEnvironment env = builder.activeTarget().dataContext(dataContext).build();
         UserDataHolder userDataHolder = (UserDataHolder) env.getDataContext();
-        SourceLocation slicingCriteriaLocation = userDataHolder.getUserData(SelectSlicingCriterionAction.Companion.getSLICING_CRITERIA_KEY());
+        Statement slicingCriteriaLocation = userDataHolder.getUserData(SelectSlicingCriterionAction.Companion.getSLICING_CRITERIA_KEY());
 
         // Complete the respective functions below, use the sourceLocation of the slicing criteria(slicingCriteriaLocation) if necessary
         Map<String, Set<Integer>> sliceLinesUnordered = createSliceLinesUnordered(slicingCriteriaLocation); // Map set of lineNumbers in slice to the respective file paths
-        Map<SourceLocation, Dependencies> dependencies = createDependenciesMap(slicingCriteriaLocation); // Map the dependencies to respective sourceLocations
-        SourceLocation firstLine = getFirstLine(slicingCriteriaLocation); // sourceLocation of the first line in slice
+        Map<Statement, Dependencies> dependencies = createDependenciesMap(slicingCriteriaLocation); // Map the dependencies to respective sourceLocations
+        Statement firstLine = getFirstLine(slicingCriteriaLocation); // sourceLocation of the first line in slice
         return new SerializedProgramSlice(sliceLinesUnordered, dependencies, firstLine);
     }
 
-    private Map<String, Set<Integer>> createSliceLinesUnordered(SourceLocation slicingCriteriaLocation) {
+    private Map<String, Set<Integer>> createSliceLinesUnordered(Statement slicingCriteriaLocation) {
         Map<String, Set<Integer>> map = new HashMap<>();
         /*
         Add set of lineNumbers in the map with file path as key
@@ -51,8 +51,8 @@ public class CustomSlicerJavaImpl implements SlicerExtensionPoint {
         return map;
     }
 
-    private Map<SourceLocation, Dependencies> createDependenciesMap(SourceLocation slicingCriteriaLocation) {
-        Map<SourceLocation, Dependencies> map = new HashMap<>();
+    private Map<Statement, Dependencies> createDependenciesMap(Statement slicingCriteriaLocation) {
+        Map<Statement, Dependencies> map = new HashMap<>();
         /*
         Add Dependencies in the map.
         Refer end of template for definition of Dependencies class
@@ -60,7 +60,7 @@ public class CustomSlicerJavaImpl implements SlicerExtensionPoint {
         return map;
     }
 
-    private SourceLocation getFirstLine(SourceLocation slicingCriteriaLocation) {
+    private Statement getFirstLine(Statement slicingCriteriaLocation) {
         String clazz = "";
         int lineNumber = 0;
         /*
@@ -68,7 +68,7 @@ public class CustomSlicerJavaImpl implements SlicerExtensionPoint {
         Return the sourceLocation of the first line in slice.
         Refer end of template for definition of SourceLocation class
         */
-        return new SourceLocation(clazz, lineNumber);
+        return new Statement(clazz, lineNumber);
     }
 }
 

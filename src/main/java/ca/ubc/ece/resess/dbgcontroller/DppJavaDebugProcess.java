@@ -1,5 +1,6 @@
 package ca.ubc.ece.resess.dbgcontroller;
 
+import ca.ubc.ece.resess.settings.WrapperManager;
 import com.intellij.debugger.engine.JavaDebugProcess;
 import com.intellij.debugger.impl.DebuggerSession;
 import com.intellij.idea.ActionsBundle;
@@ -12,28 +13,25 @@ import com.intellij.xdebugger.impl.XSourcePositionImpl;
 import com.intellij.xdebugger.impl.actions.XDebuggerActions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ca.ubc.ece.resess.slicer.ProgramSlice;
 import ca.ubc.ece.resess.util.Statement;
 import ca.ubc.ece.resess.util.Utils;
 
-import java.util.Set;
+import java.util.Objects;
 
 public class DppJavaDebugProcess extends JavaDebugProcess {
-    public final ProgramSlice slice;
     public final BreakPointController breakPointController;
     boolean slicing;
 
-    protected DppJavaDebugProcess(@NotNull XDebugSession session, @NotNull DebuggerSession javaSession, ProgramSlice slice) {
+    protected DppJavaDebugProcess(@NotNull XDebugSession session, @NotNull DebuggerSession javaSession) {
         super(session, javaSession);
-        this.slice = slice;
         this.slicing = true;
         this.breakPointController = new BreakPointController(getDebuggerSession().getProcess());
     }
 
-    public static DppJavaDebugProcess create(@NotNull final XDebugSession session, @NotNull final DebuggerSession javaSession, ProgramSlice slice) {
-        DppJavaDebugProcess res = new DppJavaDebugProcess(session, javaSession, slice);
+    public static DppJavaDebugProcess create(@NotNull final XDebugSession session, @NotNull final DebuggerSession javaSession) {
+        DppJavaDebugProcess res = new DppJavaDebugProcess(session, javaSession);
         javaSession.getProcess().setXDebugProcess(res);
-        Statement firstLine = slice.getFirstLine();
+        Statement firstLine = WrapperManager.getCurrentWrapper().getFirstInSlice(); // tbd
         if (firstLine != null) {
             res.breakPointController.addBreakpoint(firstLine);
         }
@@ -46,8 +44,8 @@ public class DppJavaDebugProcess extends JavaDebugProcess {
             return;
         }
         String clazz = Utils.findClassName(getSession().getProject(), position.getFile(), position.getOffset());
-        Set<Integer> lines = slice.getSliceLinesUnordered().get(clazz);
-        if (lines != null && lines.contains(position.getLine())) {
+        Statement statement = new Statement(Objects.requireNonNull(clazz), position.getLine());
+        if (!WrapperManager.getCurrentWrapper().isInSlice(statement)) {
             super.runToPosition(XSourcePositionImpl.create(position.getFile(), position.getLine()), context);
         } else {
             Messages.showErrorDialog("The line you selected is out of the slice, please try again!",

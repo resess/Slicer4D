@@ -31,21 +31,20 @@ class EnableSlicingAction : ToggleAction("Enable Slicing") {
 
     private fun enableSlicing(project: Project) {
         // If ProgramSlice is not null, enable line greying
-//        val sliceVisualizer = ProgramSlice.getcurrentProgramSlice()?.let { EditorSliceVisualizer(project, it) }
         EditorSliceVisualizer(project).start()
     }
 
     private fun disableSlicing(project: Project) {
         // Disable line greying
-//        val sliceVisualizer = ProgramSlice.getcurrentProgramSlice()?.let { EditorSliceVisualizer(project, it) }
         EditorSliceVisualizer(project).stop()
     }
 
     override fun update(e: AnActionEvent) {
         super.update(e)
         val presentation = e.presentation
-        presentation.isVisible = SlicerActionGroup.isSlicerSelected
-        val icon = if (SlicerActionGroup.isSlicerSelected) AllIcons.Diff.GutterCheckBoxSelected else AllIcons.Diff.GutterCheckBox
+        //TODO: Fix visibility depending on the selected slicer
+//        presentation.isVisible = SlicerActionGroup.isCustomSlicerSelected
+        val icon = if (SlicerActionGroup.isCustomSlicerSelected) AllIcons.Diff.GutterCheckBoxSelected else AllIcons.Diff.GutterCheckBox
         presentation.icon = icon
     }
 

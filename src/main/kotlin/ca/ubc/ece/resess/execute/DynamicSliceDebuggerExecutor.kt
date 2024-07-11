@@ -35,7 +35,7 @@ class DynamicSliceDebuggerExecutor : Executor() {
     override fun getStartActionText(): String = "Debug with Slicer4J"
 
     override fun getStartActionText(configurationName: String): String =
-        TextWithMnemonic.parse("Debug '%s' with Slicer4D using 'Slicer4J'")
+        TextWithMnemonic.parse("Debug '%s' with Slicer4D using 'Slicer4J'") // TODO("change: use WrapperManager")
             .replaceFirst("%s", configurationName)
             .toString()
 

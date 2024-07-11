@@ -1,5 +1,6 @@
 package ca.ubc.ece.resess.ui
 
+import ca.ubc.ece.resess.settings.WrapperManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Editor
@@ -17,7 +18,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.PsiManager
 import com.intellij.ui.Gray
-import ca.ubc.ece.resess.slicer.WrapperManager
 import ca.ubc.ece.resess.util.Statement
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiIfStatement
@@ -118,7 +118,7 @@ class EditorSliceVisualizer(private val project: Project) {
             return
         }
 
-        val wrapper = WrapperManager.testWrapper
+        val wrapper = WrapperManager.getCurrentWrapper()
         val toIgnore = ArrayList<Int>()
 
         for (line in 0 until textEditor.editor.document.lineCount) {
@@ -145,7 +145,7 @@ class EditorSliceVisualizer(private val project: Project) {
             }
         }
 
-        // Grey out all lines that are not in the slice or enclosing methods; done twice bcz not it order above
+        // Grey out all lines that are not in the slice or enclosing methods; for loop again bcz not in order above
         for (line in 0 until textEditor.editor.document.lineCount) {
             if (toIgnore.contains(line)) {
                 continue

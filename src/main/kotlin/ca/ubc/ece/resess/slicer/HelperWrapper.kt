@@ -16,7 +16,7 @@ abstract class HelperWrapper: APILayer{
     override fun nextInSlice(currentStatement: Statement): Statement?{
         val currentSlice: Slice = getSlice()
         if (currentSlice.statements.indexOf(currentStatement) == currentSlice.statements.size - 1){
-            return null
+            return null // end of slice
         }
         for (statement in currentSlice.statements){
             if (statement == currentStatement){
@@ -31,7 +31,7 @@ abstract class HelperWrapper: APILayer{
     override fun prevInSlice(currentStatement: Statement): Statement?{
         val currentSlice: Slice = getSlice()
         if (currentSlice.statements.indexOf(currentStatement) == 0){
-            return null
+            return null // start of slice
         }
         for (statement in currentSlice.statements){
             if (statement == currentStatement){
@@ -43,6 +43,14 @@ abstract class HelperWrapper: APILayer{
         }
         throw IllegalArgumentException("statement not in slice")
 
+    }
+
+    override fun getFirstInSlice(): Statement? {
+        val currentSlice: Slice = getSlice()
+        if (currentSlice.statements.isEmpty()){
+            return null
+        }
+        return currentSlice.statements[0]
     }
 
 }

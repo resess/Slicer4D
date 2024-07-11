@@ -13,18 +13,15 @@ import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.extensions.PluginId
-import com.intellij.openapi.util.Key
 import com.intellij.xdebugger.*
 import com.intellij.xdebugger.impl.XDebugSessionImpl
 import ca.ubc.ece.resess.dbgcontroller.DppJavaDebugProcess
-import ca.ubc.ece.resess.slicer.ProgramSlice
 import ca.ubc.ece.resess.util.Patch
 import java.util.concurrent.atomic.AtomicReference
 
 class DynamicSliceDebuggerRunner : GenericDebuggerRunner() {
     companion object {
         const val ID = "DynamicSliceDebuggerRunner"
-        private val SLICE_KEY = Key.create<ProgramSlice>("debuggerpp.programs-slice")
         private val LOG = Logger.getInstance(DynamicSliceDebuggerRunner::class.java)
     }
 
@@ -43,8 +40,6 @@ class DynamicSliceDebuggerRunner : GenericDebuggerRunner() {
         state: RunProfileState,
         env: ExecutionEnvironment
     ): RunContentDescriptor? {
-        val programSlice = ProgramSlice.getcurrentProgramSlice()
-        env.putUserData(SLICE_KEY, programSlice)
         return super.createContentDescriptor(state, env)
     }
 
@@ -72,8 +67,7 @@ class DynamicSliceDebuggerRunner : GenericDebuggerRunner() {
                             if (executionResult is DefaultExecutionResult) {
                                 sessionImpl.addRestartActions(*executionResult.restartActions)
                             }
-                            val slice = env.getUserData(SLICE_KEY)
-                            return DppJavaDebugProcess.create(session, debuggerSession, slice)
+                            return DppJavaDebugProcess.create(session, debuggerSession)
                         }
                     })
                 result.set(session.runContentDescriptor)

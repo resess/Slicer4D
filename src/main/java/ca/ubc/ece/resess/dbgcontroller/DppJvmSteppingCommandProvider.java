@@ -1,5 +1,7 @@
 package ca.ubc.ece.resess.dbgcontroller;
 
+import ca.ubc.ece.resess.settings.WrapperManager;
+import ca.ubc.ece.resess.util.Statement;
 import com.intellij.debugger.SourcePosition;
 import com.intellij.debugger.engine.*;
 import com.intellij.debugger.impl.JvmSteppingCommandProvider;
@@ -12,10 +14,9 @@ import com.sun.jdi.request.StepRequest;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ca.ubc.ece.resess.slicer.ProgramSlice;
 import ca.ubc.ece.resess.util.Utils;
 
-import java.util.Set;
+import java.util.Objects;
 
 public class DppJvmSteppingCommandProvider extends JvmSteppingCommandProvider {
     @Override
@@ -72,16 +73,15 @@ public class DppJvmSteppingCommandProvider extends JvmSteppingCommandProvider {
         public Integer checkCurrentPosition(SuspendContextImpl context, Location location) {
             JavaDebugProcess debugProcess = context.getDebugProcess().getXdebugProcess();
             if (debugProcess instanceof DppJavaDebugProcess) {
-                ProgramSlice slice = ((DppJavaDebugProcess) debugProcess).slice;
-                if (slice != null && (getDepth() == StepRequest.STEP_OVER || getDepth() == StepRequest.STEP_INTO)) {
+                if (getDepth() == StepRequest.STEP_OVER || getDepth() == StepRequest.STEP_INTO){
                     SourcePosition position = context.getDebugProcess().getPositionManager().getSourcePosition(location);
                     if (position != null) {
                         PsiFile file = position.getFile();
                         FileIndex fileIndex = ProjectRootManager.getInstance(file.getProject()).getFileIndex();
                         if (fileIndex.isInContent(file.getVirtualFile())) {
                             String clazz = Utils.findClassName(file, position.getOffset());
-                            Set<Integer> lines = slice.getSliceLinesUnordered().get(clazz);
-                            if (lines == null || !lines.contains(position.getLine())) {
+                            Statement statement = new Statement(Objects.requireNonNull(clazz), position.getLine());
+                            if (!WrapperManager.getCurrentWrapper().isInSlice(statement)) {
                                 return StepRequest.STEP_OVER; // Step until a slice line is reached
                             }
                         }

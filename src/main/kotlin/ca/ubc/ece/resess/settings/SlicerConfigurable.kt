@@ -24,5 +24,5 @@ class SlicerConfigurable: Configurable {
         settingsPanel.dispose()
     }
 
-    override fun getDisplayName(): String = "Slicer Config"
+    override fun getDisplayName(): String = "Slicer Configuration Menu"
 }

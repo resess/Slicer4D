@@ -9,6 +9,7 @@ interface APILayer {
     fun setSlicingCriterion(statement: Statement, variables: ArrayList<Variable>? = null): Boolean
     fun setParameters(values: Map<ParameterSpec, ArrayList<ParameterType>>): Boolean
     fun isInSlice(currentStatement: Statement): Boolean
+    fun getFirstInSlice(): Statement?
     fun nextInSlice(currentStatement: Statement): Statement?
     fun prevInSlice(currentStatement: Statement): Statement?
 }

@@ -1,5 +1,6 @@
 package ca.ubc.ece.resess.settings
 
+import ca.ubc.ece.resess.slicer.APILayer
 import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
@@ -16,19 +17,19 @@ import javax.swing.table.AbstractTableModel
 
 class SettingsUI: JPanel() {
     var modified = false
-    val settings = service<PluginSettingsStateComponent>()
-    var uiSliceProviders = settings.sliceProviders.toMutableList()
+    val settings = service<WrapperManager>()
+    var uiSliceProviders = settings.slicerWrappers.toMutableList()
     val table = JBTable(object: AbstractTableModel() {
         override fun getRowCount(): Int {
             return uiSliceProviders.size
         }
 
         override fun getColumnCount(): Int {
-            return settings.sliceProviderFields.size
+            return settings.slicerWrapperFields.size
         }
 
         override fun getColumnName(column: Int): String {
-            return settings.sliceProviderFields[column]
+            return settings.slicerWrapperFields[column]
         }
 
         override fun isCellEditable(rowIndex: Int, columnIndex: Int): Boolean {
@@ -36,12 +37,9 @@ class SettingsUI: JPanel() {
         }
 
         override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
-            val key = settings.sliceProviderFields[columnIndex]
+            val key = settings.slicerWrapperFields[columnIndex]
             val sliceProviderInfo = uiSliceProviders[rowIndex]
-            val result = sliceProviderInfo[key]
-            if(result == null){
-                return ""
-            }
+            val result = sliceProviderInfo.second.get(key) ?: return ""
             return result
         }
     })
@@ -49,12 +47,15 @@ class SettingsUI: JPanel() {
 
     fun createComponent(): JComponent {
         toolbarDecorator.setAddAction {
-            val dialogWrapper = AddSliceProviderDialog(settings.sliceProviderFields)
+            val dialogWrapper = AddSliceProviderDialog(settings.slicerWrapperFields)
             val result = dialogWrapper.showAndGet()
             if(!result){
                 return@setAddAction
             }
-            uiSliceProviders.add(dialogWrapper.data)
+            
+            val data: Pair<APILayer, WrapperMetadata> = WrapperManager.setupNewWrapper(dialogWrapper.data) // add specs using getConfig()
+
+            uiSliceProviders.add(data)
             table.updateUI()
             modified = true
 
@@ -73,18 +74,8 @@ class SettingsUI: JPanel() {
 
         return JPanel().apply {
             layout = BoxLayout(this, BoxLayout.PAGE_AXIS)
-//            add(JLabel("My Setting:"))
-//            add(Breadcrumbs())
             add(toolbarDecorator.createPanel())
         }
-//        return panel {
-//            row{
-//                Breadcrumbs()
-//            }
-//            row {
-//                add(list.createPanel())
-//            }
-//        }
     }
 
     fun isModified(): Boolean {
@@ -93,14 +84,14 @@ class SettingsUI: JPanel() {
 
     fun apply() {
         modified = false
-        settings.sliceProviders = uiSliceProviders.toMutableList()
+        settings.slicerWrappers = uiSliceProviders.toMutableList()
         table.updateUI()
     }
 
     fun reset() {
         // Implement logic to reset the settings
         modified = false
-        uiSliceProviders = settings.sliceProviders.toMutableList()
+        uiSliceProviders = settings.slicerWrappers.toMutableList()
         table.updateUI()
     }
 
@@ -109,15 +100,10 @@ class SettingsUI: JPanel() {
     }
 }
 
-class AddSliceProviderDialog : DialogWrapper {
-//    var name: String = ""
-//    var location: String = ""
-//    var url: String = ""
-    var fields: List<String> = listOf()
+class AddSliceProviderDialog(var fields: List<String>) : DialogWrapper(true) {
     var data = HashMap<String, String>()
 
-    constructor(fields: List<String>) : super(true) {
-        this.fields = fields
+    init {
         title = "Add Slice Provider"
         for(field in fields){
             data[field] = ""
@@ -125,7 +111,7 @@ class AddSliceProviderDialog : DialogWrapper {
         init()
     }
 
-    override fun createCenterPanel(): JComponent? {
+    override fun createCenterPanel(): JComponent {
 //        var dialogPanel = JPanel(BorderLayout())
 //
 //        var label = JLabel("Testing")
@@ -139,9 +125,6 @@ class AddSliceProviderDialog : DialogWrapper {
 //            }
 //            row("Slice Provider Location:") {
 //                textField().bindText(::location)
-//            }
-//            row("Slice Provider URL") {
-//                textField().bindText(::url)
 //            }
             var first = true
             for (field in fields){

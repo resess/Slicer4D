@@ -86,7 +86,7 @@ class Slicer4JWrapper: HelperWrapper() {
     }
 
     override fun getConfiguration(): ArrayList<ParameterSpec> {
-        TODO("Not yet implemented")
+        return ArrayList<ParameterSpec>()
     }
 
     override fun setSlicingCriterion(statement: Statement, variables: ArrayList<Variable>?): Boolean {

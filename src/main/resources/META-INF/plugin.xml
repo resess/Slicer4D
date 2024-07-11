@@ -18,22 +18,18 @@
     </projectListeners>
 
     <extensionPoints>
-        <extensionPoint name="slicerExtensionPoint" interface="ca.ubc.ece.resess.slicer.SlicerExtensionPoint"/>
+        <extensionPoint name="APILayer" interface="ca.ubc.ece.resess.slicer.APILayer"/>
     </extensionPoints>
 
     <extensions defaultExtensionNs="ca.ubc.ece.resess">
-        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.DefaultSlicerExtensionPointImpl"/>
-<!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.TestSlicerJavaImpl"/>-->
-<!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.TestSlicerExtensionPointImpl"/>-->
-<!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.JavaSlicerCustom"/>-->
-<!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.CustomSlicerJavaImpl"/>-->
-<!--        <slicerExtensionPoint implementation="ca.ubc.ece.resess.slicer.CustomSlicerKotlinImpl"/>-->
+        <APILayer implementation="ca.ubc.ece.resess.slicer.Slicer4JWrapper"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <executor implementation="ca.ubc.ece.resess.execute.DynamicSliceDebuggerExecutor"/>
         <programRunner implementation="ca.ubc.ece.resess.execute.DynamicSliceDebuggerRunner"/>
         <debugger.jvmSteppingCommandProvider implementation="ca.ubc.ece.resess.dbgcontroller.DppJvmSteppingCommandProvider"/>
+<!--        <debugger.ui.tree.renderer.ClassRenderer implementation="ca.ubc.ece.resess.dbgcontroller.DppJvmSteppingCommandProvider"/>-->
         <notificationGroup id="SlicePlugin"
                            displayType="BALLOON"
                            toolWindowId="toolWindowSlice"/>
@@ -43,7 +39,7 @@
                 instance="ca.ubc.ece.resess.settings.SlicerConfigurable"
                 id="ca.ubc.ece.resess.settings.SlicerConfigurable"
                 displayName="Slicer4D Settings"/>
-        <applicationService serviceImplementation="ca.ubc.ece.resess.settings.PluginSettingsStateComponent"/>
+        <applicationService serviceImplementation="ca.ubc.ece.resess.settings.WrapperManager"/>
     </extensions>
 
     <actions>

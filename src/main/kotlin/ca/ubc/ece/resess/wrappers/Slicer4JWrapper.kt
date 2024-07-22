@@ -1,7 +1,10 @@
-package ca.ubc.ece.resess.slicer
+package ca.ubc.ece.resess.wrappers
 
 import ca.ubc.ece.resess.execute.DynamicSliceDebuggerExecutor
 import ca.ubc.ece.resess.execute.RunCurrentFile
+import ca.ubc.ece.resess.slicer.HelperWrapper
+import ca.ubc.ece.resess.slicer.ParameterSpec
+import ca.ubc.ece.resess.slicer.Slice
 import ca.ubc.ece.resess.util.ParameterType
 import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Variable
@@ -51,9 +54,12 @@ import kotlin.collections.ArrayList
 
 
 class Slicer4JWrapper: HelperWrapper() {
+    override val slicerName: String = "Slicer4J"
+
     private var slicingCriterion: Statement? = null
     private var currentSlice: Slice? = null
     private var sliceForMostRecentCrit: Boolean = false
+
 
 
     override fun getSlice(): Slice {
@@ -96,7 +102,7 @@ class Slicer4JWrapper: HelperWrapper() {
     }
 
     override fun setParameters(values: Map<ParameterSpec, ArrayList<ParameterType>>): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
 
@@ -122,10 +128,6 @@ class Slicer4JWrapper: HelperWrapper() {
             taintWrapperPath = modelsDirectory.resolve("EasyTaintWrapperSource.txt").toString()
         }
 
-        /*
-     * TODO: Find a way for IntelliJ to consider this a build task that does not need to be repeated if we've already
-     * instrumented this JAR before.
-     */
         fun instrument(
             env: ExecutionEnvironment,
             outputDirectory: Path,
@@ -399,7 +401,7 @@ class Slicer4JWrapper: HelperWrapper() {
             }
         task.queue() // This runs synchronously for modal tasks
         for (statement in task.result.statements) {
-            println("Statement [DEFAULT]: ${statement.clazz}:${statement.lineNo}")
+            println("Statement [DEFAULT]: ${statement.clazz}:${statement.lineNo+1}")
         }
         return task.result
     }

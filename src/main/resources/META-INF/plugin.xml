@@ -17,19 +17,12 @@
                   topic="com.intellij.xdebugger.breakpoints.XBreakpointListener" />
     </projectListeners>
 
-    <extensionPoints>
-        <extensionPoint name="APILayer" interface="ca.ubc.ece.resess.slicer.APILayer"/>
-    </extensionPoints>
-
-    <extensions defaultExtensionNs="ca.ubc.ece.resess">
-        <APILayer implementation="ca.ubc.ece.resess.slicer.Slicer4JWrapper"/>
-    </extensions>
-
     <extensions defaultExtensionNs="com.intellij">
         <executor implementation="ca.ubc.ece.resess.execute.DynamicSliceDebuggerExecutor"/>
         <programRunner implementation="ca.ubc.ece.resess.execute.DynamicSliceDebuggerRunner"/>
         <debugger.jvmSteppingCommandProvider implementation="ca.ubc.ece.resess.dbgcontroller.DppJvmSteppingCommandProvider"/>
-<!--        <debugger.ui.tree.renderer.ClassRenderer implementation="ca.ubc.ece.resess.dbgcontroller.DppJvmSteppingCommandProvider"/>-->
+        <debugger.nodeNameAdjuster implementation="ca.ubc.ece.resess.ui.NameAdjuster"/>
+        <debugger.nodeRenderer implementation="ca.ubc.ece.resess.ui.CustomRenderer"/>
         <notificationGroup id="SlicePlugin"
                            displayType="BALLOON"
                            toolWindowId="toolWindowSlice"/>
@@ -44,47 +37,46 @@
 
     <actions>
         <group
-                id="ca.ubc.ece.resess.ui.SlicerActionGroup"
-                class="ca.ubc.ece.resess.ui.SlicerActionGroup"
+                id="ca.ubc.ece.resess.ui.SelectSlicerActionGroup"
+                class="ca.ubc.ece.resess.ui.SelectSlicerActionGroup"
                 popup="true"
                 text="Select Slicing Tool"
-                description="Use this tool to slice while inspecting failure"
+                description="Select the slicing tool to use for inspecting failures"
                 icon = "com.intellij.icons.AllIcons.Actions.ListFiles">
             <add-to-group
                     group-id="EditorPopupMenu"
                     anchor="last"/>
         </group>
-        <group>
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <action id="ca.ubc.ece.resess.SelectSlicingCriterionAction"
-                    class="ca.ubc.ece.resess.ui.SelectSlicingCriterionAction"
-                    text="Select Slicing Criterion"
-                    description="Select the line as the slicing criterion for Slicer4J"
-                    icon="ca.ubc.ece.resess.ui.Icons.Logo">
-            </action>
-            <action id="ca.ubc.ece.resess.EnableSlicingAction"
-                    class="ca.ubc.ece.resess.ui.SelectSlicingCriterionAction"
-                    text="Enable Grey Lining"
-                    description="Highlight the lines present in the slice"
-                    icon = "com.intellij.icons.AllIcons.Actions.Words">
-            </action>
-<!--            <action id="ca.ubc.ece.resess.EnableSlicingAction"-->
-<!--                    class="ca.ubc.ece.resess.ui.EnableSlicingAction"-->
-<!--                    text="Enable Slicing"-->
-<!--                    description="Enable or disable slicing">-->
-<!--            </action>-->
-<!--            <action id="ca.ubc.ece.resess.UploadSliceAction"-->
-<!--                    class="ca.ubc.ece.resess.ui.UploadSliceAction"-->
-<!--                    text="Upload Slice"-->
-<!--                    description="Upload a JSON file for slicing">-->
-<!--            </action>-->
-<!--            <action id="ca.ubc.ece.resess.SaveSliceAction"-->
-<!--                    class="ca.ubc.ece.resess.ui.SaveSliceAction"-->
-<!--                    text="Save Slice"-->
-<!--                    description="Save ProgramSlice as JSON">-->
-<!--            </action>-->
-            <separator/>
+        <group
+                id="ca.ubc.ece.resess.ui.DisplayParametersActionGroup"
+                class="ca.ubc.ece.resess.ui.DisplayParametersActionGroup"
+                popup="false"
+                text="Display Extra Parameters Status"
+                description="Select extra parameters to pass to the selected slicer"
+                icon = "com.intellij.icons.AllIcons.Actions.AddMulticaret">
+            <add-to-group
+                    group-id="EditorPopupMenu"
+                    anchor="last"/>
         </group>
+        <action id="ca.ubc.ece.resess.SelectSlicingCriterionAction"
+                class="ca.ubc.ece.resess.ui.SelectSlicingCriterionAction"
+                text="Select Slicing Criterion"
+                description="Select the line as the slicing criterion for the selected slicer"
+                icon="ca.ubc.ece.resess.ui.Icons.Logo">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+        <group
+                id="ca.ubc.ece.resess.ui.SelectParametersActionGroup"
+                class="ca.ubc.ece.resess.ui.SelectParametersActionGroup"
+                popup="false"
+                text="Select Extra Parameters"
+                description="Select extra parameters to pass to the selected slicer"
+                icon = "com.intellij.icons.AllIcons.Actions.AddMulticaret">
+            <add-to-group
+                    group-id="EditorPopupMenu"
+                    anchor="last"/>
+        </group>
+
         <group id="ca.ubc.ece.resess.ui.SliceMenu" text="Slicer4D menu" popup="true" class="ca.ubc.ece.resess.ui.SliceMenu" icon="com.intellij.icons.AllIcons.Actions.MenuCut">
             <add-to-group group-id="RunnerActions" anchor="last"/>
         </group>

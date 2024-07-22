@@ -81,7 +81,10 @@ public class DppJvmSteppingCommandProvider extends JvmSteppingCommandProvider {
                         if (fileIndex.isInContent(file.getVirtualFile())) {
                             String clazz = Utils.findClassName(file, position.getOffset());
                             Statement statement = new Statement(Objects.requireNonNull(clazz), position.getLine());
-                            if (!WrapperManager.getCurrentWrapper().isInSlice(statement)) {
+                            try {
+                                WrapperManager.getCurrentWrapper().nextInSlice(statement); // throws exception if not in slice
+                                assert(WrapperManager.getCurrentWrapper().isInSlice(statement)); // make sure that it is in slice
+                            } catch (Exception e) {
                                 return StepRequest.STEP_OVER; // Step until a slice line is reached
                             }
                         }

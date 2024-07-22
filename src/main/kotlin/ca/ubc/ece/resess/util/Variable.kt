@@ -2,12 +2,14 @@ package ca.ubc.ece.resess.util
 
 import java.util.*
 
-class Variable(val statement: Statement, val variable: String): ParameterType {
-    override fun toString() = "$statement:$variable"
+class Variable(val statement: Statement,
+               val name: String,
+               val isDeclared: Boolean): ParameterType {
+    override fun toString() = "$statement:$name"
 
     override fun equals(other: Any?) = (other is Variable)
             && statement.equals(other.statement)
-            && variable == other.variable
+            && name == other.name
 
-    override fun hashCode() = Objects.hash(statement, variable)
+    override fun hashCode() = Objects.hash(statement, name)
 }

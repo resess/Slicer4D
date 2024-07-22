@@ -6,7 +6,8 @@ This plugin integrates dynamic slicing into the existing IntelliJ IDE Debugger.
 PS: This tool is only accurate for deterministic programs 
 
 ## 1. Prerequisites
-- Ensure that you have [Graphviz](https://graphviz.org/) installed.
+
+[//]: # (- Ensure that you have [Graphviz]&#40;https://graphviz.org/&#41; installed.)
 - We recommend gaining familiarity with slice-based debugging and dynamic analysis. 
 
 ## 2. Setup
@@ -137,8 +138,7 @@ Khaled Ahmed, Mieszko Lis, and Julia Rubin. Slicer4J: A Dynamic Slicer for Java.
   - Clone this repository
   - Open Slicer4D as a new project in IntelliJ IDE
   - Implement the APILayer interface directly, or inherit the abstract class HelperWrapper and implement the remaining methods
-  
-[//]: # (TODO: TO BE UPDATED AFTER IMPLEMENTING THE ADD SLICER WORKFLOW)
-- Add your implementation in extensions in [plugin.xml](src/main/resources/META-INF/plugin.xml)
+  - Add your implementation to the 'ca.ubc.ece.resess.wrappers' package, and add its location to the 'ListOfWrapperPaths' class 
   - Select 'Run Plugin' run configuration, run by pressing the green run button in the toolbar
-  - An IDE instance will open in a new window with your custom slicer present in the 'Available Slicers' list
+  - An IDE instance will open in a new window with your custom slicer present in the 'Select Slicer' list or Configuration menu
+    - You can test your wrapper by manually adding it in the settings (+ button and specify name/location (e.g. ca.ubc.ece.resess.wrappers.Slicer4JWrapper))

@@ -15,14 +15,16 @@ abstract class HelperWrapper: APILayer{
     }
     override fun nextInSlice(currentStatement: Statement): Statement?{
         val currentSlice: Slice = getSlice()
-        if (currentSlice.statements.indexOf(currentStatement) == currentSlice.statements.size - 1){
+        val statements : ArrayList<Statement> = getUniqueStatements(currentSlice)
+
+        if (statements.indexOf(currentStatement) == statements.size - 1){
             return null // end of slice
         }
-        for (statement in currentSlice.statements){
+        for (statement in statements){
             if (statement == currentStatement){
-                val index = currentSlice.statements.indexOf(statement)
-                if (index < currentSlice.statements.size - 1){
-                    return currentSlice.statements[index + 1]
+                val index = statements.indexOf(statement)
+                if (index < statements.size - 1){
+                    return statements[index + 1]
                 }
             }
         }
@@ -30,14 +32,17 @@ abstract class HelperWrapper: APILayer{
     }
     override fun prevInSlice(currentStatement: Statement): Statement?{
         val currentSlice: Slice = getSlice()
-        if (currentSlice.statements.indexOf(currentStatement) == 0){
+        val statements: ArrayList<Statement> = getUniqueStatements(currentSlice)
+
+        if (statements.indexOf(currentStatement) == 0){
             return null // start of slice
         }
-        for (statement in currentSlice.statements){
+
+        for (statement in statements){
             if (statement == currentStatement){
-                val index = currentSlice.statements.indexOf(statement)
+                val index = statements.indexOf(statement)
                 if (index > 0){
-                    return currentSlice.statements[index - 1]
+                    return statements[index - 1]
                 }
             }
         }
@@ -51,6 +56,16 @@ abstract class HelperWrapper: APILayer{
             return null
         }
         return currentSlice.statements[0]
+    }
+
+    private fun getUniqueStatements(slice: Slice): ArrayList<Statement> {
+        val statements: ArrayList<Statement> = ArrayList()
+        slice.statements.forEach {
+            if (!statements.contains(it)) {
+                statements.add(it)
+            }
+        }
+        return statements
     }
 
 }

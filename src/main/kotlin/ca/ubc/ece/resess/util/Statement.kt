@@ -5,7 +5,7 @@ import java.util.*
 
 class Statement @JvmOverloads constructor(
     val clazz: String,
-    val lineNo: Int,
+    val lineNo: Int, // 0 based
     val slicingContext: AnActionEvent? = null): ParameterType {
     override fun toString() = "$clazz:$lineNo"
 

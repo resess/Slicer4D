@@ -1,18 +1,20 @@
 package ca.ubc.ece.resess.ui
 
 import ca.ubc.ece.resess.settings.WrapperManager
-import ca.ubc.ece.resess.settings.WrapperManagerUI
+import ca.ubc.ece.resess.settings.WrapperMetadata
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 
-class SlicerActionGroup : ActionGroup() {
+class SelectSlicerActionGroup : ActionGroup() {
 
     companion object {
         var isCustomSlicerSelected = false
     }
+
+    private val childrenMap: HashMap<WrapperMetadata, AnAction> = hashMapOf()
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         val settings = service<WrapperManager>()
@@ -22,12 +24,21 @@ class SlicerActionGroup : ActionGroup() {
 
         // Add separator and heading
         children.add(Separator("Available Slicers"))
-        for ((instance, metadata) in slicerWrappers) {
+        for (metadata in slicerWrappers) {
             val name = metadata.name
-            val currMetadata = WrapperManager.getCurrentWrapperMetata()
+            val currMetadata = WrapperManager.getCurrentWrapperMetadata()
 
-            val action = WrapperManagerUI.getSelectSlicerAction(instance, metadata)
+            if (childrenMap.keys.contains(metadata)) { // If the slicer alr has AnAction, no need to create it again
+                val action = childrenMap[metadata]!!
+                action.templatePresentation.icon = if (currMetadata.name == name) AllIcons.Diff.GutterCheckBoxSelected else AllIcons.Diff.GutterCheckBox
+                children.add(action)
+                continue
+            }
+
+
+            val action = WrapperManagerUI.getSelectSlicerAction(metadata)
             action.templatePresentation.icon = if (currMetadata.name == name) AllIcons.Diff.GutterCheckBoxSelected else AllIcons.Diff.GutterCheckBox
+            childrenMap[metadata] = action
             children.add(action)
         }
 

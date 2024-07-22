@@ -5,6 +5,7 @@ import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Variable
 
 interface APILayer {
+    val slicerName: String
     fun getConfiguration(): ArrayList<ParameterSpec>
     fun setSlicingCriterion(statement: Statement, variables: ArrayList<Variable>? = null): Boolean
     fun setParameters(values: Map<ParameterSpec, ArrayList<ParameterType>>): Boolean

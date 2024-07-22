@@ -10,6 +10,8 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.util.PsiTreeUtil
 import ca.ubc.ece.resess.settings.WrapperManager
 import ca.ubc.ece.resess.util.Statement
+import com.intellij.icons.AllIcons
+import com.intellij.openapi.ui.Messages
 
 class SelectSlicingCriterionAction : AnAction() {
     companion object {
@@ -18,12 +20,6 @@ class SelectSlicingCriterionAction : AnAction() {
 
     override fun getActionUpdateThread(): ActionUpdateThread {
         return ActionUpdateThread.BGT
-    }
-
-    override fun update(e: AnActionEvent) {
-        super.update(e)
-        //TODO: Fix visibility depending on the selected slicer
-//        e.presentation.isVisible = SlicerActionGroup.isCustomSlicerSelected
     }
 
     override fun actionPerformed(e: AnActionEvent) {
@@ -35,23 +31,24 @@ class SelectSlicingCriterionAction : AnAction() {
         val lineNo = document.getLineNumber(offset) + 1
         LOG.info("Selected slicing criterion line number is $lineNo")
 
-        // TODO: show a dialog for these errors
         val element = psiFile.findElementAt(offset)
-            ?: throw ExecutionException("Cannot find any element at this location")
+        if (element == null) {
+            Messages.showMessageDialog("Cannot find any element at this location",
+            "Location Error", AllIcons.General.WarningDialog)
+            throw ExecutionException("Cannot find any element at this location")
+        }
         val clazz = PsiTreeUtil.getParentOfType(element, PsiClass::class.java)
-            ?: throw ExecutionException("This location is not inside a Java class")
+        if (clazz == null) {
+            Messages.showMessageDialog("This location is not inside a Java class",
+            "Location Error", AllIcons.General.WarningDialog)
+            throw ExecutionException("This location is not inside a Java class")
+        }
 
         val fileName = e.getData(CommonDataKeys.VIRTUAL_FILE)?.name
         println("File Name is $fileName")
         LOG.info("Class Name is ${clazz.qualifiedName}")
 
         //set the slicing criterion
-        WrapperManager.getCurrentWrapper().setSlicingCriterion(Statement(clazz.qualifiedName!!, lineNo, e))
-
-        //If EnableSlicing, perform line greying
-        if(EnableSlicingAction.isSlicingEnabled){
-            val sliceVisualizer = EditorSliceVisualizer(e.project!!)
-            sliceVisualizer.start()
-        }
+        WrapperManager.setSlicingCriterion(Statement(clazz.qualifiedName!!, lineNo, e))
     }
 }

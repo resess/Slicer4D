@@ -16,7 +16,10 @@ import com.intellij.openapi.extensions.PluginId
 import com.intellij.xdebugger.*
 import com.intellij.xdebugger.impl.XDebugSessionImpl
 import ca.ubc.ece.resess.dbgcontroller.DppJavaDebugProcess
+import ca.ubc.ece.resess.settings.WrapperManager
 import ca.ubc.ece.resess.util.Patch
+import com.intellij.icons.AllIcons
+import com.intellij.openapi.ui.Messages
 import java.util.concurrent.atomic.AtomicReference
 
 class DynamicSliceDebuggerRunner : GenericDebuggerRunner() {
@@ -31,16 +34,14 @@ class DynamicSliceDebuggerRunner : GenericDebuggerRunner() {
         executorId == DynamicSliceDebuggerExecutor.EXECUTOR_ID
 
     override fun execute(environment: ExecutionEnvironment) {
+        if (!WrapperManager.extraParametersStatus || !WrapperManager.slicingCriterionStatus) {
+            Messages.showMessageDialog("Cannot start Debugging session without having selected all parameters and slicing criterion", "Debugging Error",
+                AllIcons.General.WarningDialog)
+            return
+        }
         LOG.info("Version: ${PluginManagerCore.getPlugin(PluginId.getId("ca.ubc.ece.resess"))!!.version}")
         Patch.forceSetDelegatedRunProfile(environment.runProfile, environment.runProfile)
         super.execute(environment)
-    }
-
-    override fun createContentDescriptor(
-        state: RunProfileState,
-        env: ExecutionEnvironment
-    ): RunContentDescriptor? {
-        return super.createContentDescriptor(state, env)
     }
 
     @Throws(ExecutionException::class)

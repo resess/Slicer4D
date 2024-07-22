@@ -1,12 +1,9 @@
 package ca.ubc.ece.resess.ui
 
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
-import com.intellij.openapi.options.ShowSettingsUtil
 import ca.ubc.ece.resess.settings.WrapperManager
-import ca.ubc.ece.resess.settings.WrapperManagerUI
 
 class SliceMenu: DefaultActionGroup() {
     private val settings = service<WrapperManager>()
@@ -16,9 +13,8 @@ class SliceMenu: DefaultActionGroup() {
     }
 
     private fun addChildren(){
-        //TODO: fix list
-        for (pair in settings.slicerWrappers){
-            super.addAction(WrapperManagerUI.getSelectSlicerAction(pair.first, pair.second))
+        for (metadata in settings.slicerWrappers){
+            super.addAction(WrapperManagerUI.getSelectSlicerAction(metadata))
         }
 
         super.addSeparator()

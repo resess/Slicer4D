@@ -1,5 +1,6 @@
 package ca.ubc.ece.resess.execute
 
+import ca.ubc.ece.resess.settings.WrapperManager
 import com.intellij.execution.Executor
 import com.intellij.execution.ExecutorRegistry
 import com.intellij.openapi.util.IconLoader
@@ -35,7 +36,7 @@ class DynamicSliceDebuggerExecutor : Executor() {
     override fun getStartActionText(): String = "Debug with Slicer4J"
 
     override fun getStartActionText(configurationName: String): String =
-        TextWithMnemonic.parse("Debug '%s' with Slicer4D using 'Slicer4J'") // TODO("change: use WrapperManager")
+        TextWithMnemonic.parse("Debug '%s' with Slicer4D using ${WrapperManager.getCurrentWrapperMetadata().name}")
             .replaceFirst("%s", configurationName)
             .toString()
 

@@ -1,6 +1,6 @@
 package ca.ubc.ece.resess.settings
 
-import ca.ubc.ece.resess.slicer.APILayer
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
@@ -10,6 +10,7 @@ import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
 import com.intellij.ui.table.JBTable
+import com.intellij.openapi.ui.Messages
 import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -39,7 +40,7 @@ class SettingsUI: JPanel() {
         override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
             val key = settings.slicerWrapperFields[columnIndex]
             val sliceProviderInfo = uiSliceProviders[rowIndex]
-            val result = sliceProviderInfo.second.get(key) ?: return ""
+            val result = sliceProviderInfo.get(key) ?: return ""
             return result
         }
     })
@@ -53,9 +54,9 @@ class SettingsUI: JPanel() {
                 return@setAddAction
             }
             
-            val data: Pair<APILayer, WrapperMetadata> = WrapperManager.setupNewWrapper(dialogWrapper.data) // add specs using getConfig()
+            val data: WrapperMetadata = WrapperManager.setupNewWrapper(dialogWrapper.data) // add specs using getConfig()
 
-            uiSliceProviders.add(data)
+            uiSliceProviders.add(data) // add wrapper and metadata to uiSliceProviders (but not main list, as "apply" is not called yet)
             table.updateUI()
             modified = true
 
@@ -63,7 +64,14 @@ class SettingsUI: JPanel() {
         toolbarDecorator.setRemoveAction(object: AnActionButtonRunnable{
             override fun run(t: AnActionButton?) {
                 val selectedRow = table.selectedRow
-                if(selectedRow == -1){
+                if(selectedRow <= 0){
+                    if (selectedRow == 0) {
+                        Messages.showMessageDialog(
+                            "Cannot remove the default slicer",
+                            "Removal Error",
+                            AllIcons.General.WarningDialog
+                        )
+                    }
                     return
                 }
                 uiSliceProviders.removeAt(selectedRow)

@@ -1,6 +1,7 @@
 package ca.ubc.ece.resess.settings
 
 import com.intellij.icons.AllIcons
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
@@ -18,19 +19,19 @@ import javax.swing.table.AbstractTableModel
 
 class SettingsUI: JPanel() {
     var modified = false
-    val settings = service<WrapperManager>()
-    var uiSliceProviders = settings.slicerWrappers.toMutableList()
+//    val settings = service<WrapperManager>()
+    var uiSliceProviders = WrapperManager.slicerWrappers.toMutableList()
     val table = JBTable(object: AbstractTableModel() {
         override fun getRowCount(): Int {
             return uiSliceProviders.size
         }
 
         override fun getColumnCount(): Int {
-            return settings.slicerWrapperFields.size
+            return WrapperManager.slicerWrapperFields.size
         }
 
         override fun getColumnName(column: Int): String {
-            return settings.slicerWrapperFields[column]
+            return WrapperManager.slicerWrapperFields[column]
         }
 
         override fun isCellEditable(rowIndex: Int, columnIndex: Int): Boolean {
@@ -38,7 +39,7 @@ class SettingsUI: JPanel() {
         }
 
         override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
-            val key = settings.slicerWrapperFields[columnIndex]
+            val key = WrapperManager.slicerWrapperFields[columnIndex]
             val sliceProviderInfo = uiSliceProviders[rowIndex]
             val result = sliceProviderInfo.get(key) ?: return ""
             return result
@@ -48,7 +49,7 @@ class SettingsUI: JPanel() {
 
     fun createComponent(): JComponent {
         toolbarDecorator.setAddAction {
-            val dialogWrapper = AddSliceProviderDialog(settings.slicerWrapperFields)
+            val dialogWrapper = AddSliceProviderDialog(WrapperManager.slicerWrapperFields)
             val result = dialogWrapper.showAndGet()
             if(!result){
                 return@setAddAction
@@ -66,11 +67,13 @@ class SettingsUI: JPanel() {
                 val selectedRow = table.selectedRow
                 if(selectedRow <= 0){
                     if (selectedRow == 0) {
-                        Messages.showMessageDialog(
-                            "Cannot remove the default slicer",
-                            "Removal Error",
-                            AllIcons.General.WarningDialog
-                        )
+                        ApplicationManager.getApplication().invokeLater {
+                            Messages.showMessageDialog(
+                                "Cannot remove the default slicer",
+                                "Removal Error",
+                                AllIcons.General.WarningDialog
+                            )
+                        }
                     }
                     return
                 }
@@ -92,14 +95,14 @@ class SettingsUI: JPanel() {
 
     fun apply() {
         modified = false
-        settings.slicerWrappers = uiSliceProviders.toMutableList()
+        WrapperManager.slicerWrappers = uiSliceProviders.toMutableList()
         table.updateUI()
     }
 
     fun reset() {
         // Implement logic to reset the settings
         modified = false
-        uiSliceProviders = settings.slicerWrappers.toMutableList()
+        uiSliceProviders = WrapperManager.slicerWrappers.toMutableList()
         table.updateUI()
     }
 

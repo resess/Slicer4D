@@ -33,7 +33,7 @@ class DynamicSliceDebuggerExecutor : Executor() {
 
     override fun getId(): String = EXECUTOR_ID
 
-    override fun getStartActionText(): String = "Debug with Slicer4J"
+    override fun getStartActionText(): String = "Debug with Slicer4D"
 
     override fun getStartActionText(configurationName: String): String =
         TextWithMnemonic.parse("Debug '%s' with Slicer4D using ${WrapperManager.getCurrentWrapperMetadata().name}")

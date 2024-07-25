@@ -12,6 +12,7 @@ import ca.ubc.ece.resess.ui.EditorSliceVisualizer
 class DebuggerListener : XDebuggerManagerListener {
     companion object {
         private val LOG = Logger.getInstance(DebuggerListener::class.java)
+        var isDebugging = false
     }
 
     override fun processStarted(debugProcess: XDebugProcess) {
@@ -21,9 +22,13 @@ class DebuggerListener : XDebuggerManagerListener {
         debugProcess.processHandler.addProcessListener(object : ProcessListener {
             override fun startNotified(processEvent: ProcessEvent) {
                 sliceVisualizer.start()
+                isDebugging = true
             }
-            override fun processTerminated(processEvent: ProcessEvent) {}
-            override fun processWillTerminate(processEvent: ProcessEvent, b: Boolean) {}
+            override fun processTerminated(processEvent: ProcessEvent) {
+                isDebugging = false
+            }
+            override fun processWillTerminate(processEvent: ProcessEvent, b: Boolean) {
+            }
             override fun onTextAvailable(event: ProcessEvent, outputType: Key<*>) {}
         })
     }

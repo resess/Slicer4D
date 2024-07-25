@@ -19,6 +19,7 @@ import ca.ubc.ece.resess.slicer.dynamic.core.slicer.SlicingWorkingSet
 import ca.ubc.ece.resess.slicer.dynamic.core.statements.StatementInstance
 import ca.ubc.ece.resess.slicer.dynamic.slicer4j.Slicer
 import ca.ubc.ece.resess.slicer.dynamic.slicer4j.instrumenter.JavaInstrumenter
+import ca.ubc.ece.resess.ui.SelectSlicingCriterionAction
 import com.intellij.execution.configurations.JavaCommandLineState
 import com.intellij.execution.configurations.RunProfileState
 import com.intellij.execution.jar.JarApplicationCommandLineState
@@ -46,10 +47,13 @@ import kotlin.io.path.*
 import com.intellij.execution.*
 import com.intellij.execution.actions.RunConfigurationsComboBoxAction
 import com.intellij.execution.runners.ExecutionEnvironmentBuilder
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
+import com.intellij.openapi.ui.Messages
 import kotlin.collections.ArrayList
 
 
@@ -59,8 +63,6 @@ class Slicer4JWrapper: HelperWrapper() {
     private var slicingCriterion: Statement? = null
     private var currentSlice: Slice? = null
     private var sliceForMostRecentCrit: Boolean = false
-
-
 
     override fun getSlice(): Slice {
         if (currentSlice != null && sliceForMostRecentCrit) {
@@ -390,9 +392,17 @@ class Slicer4JWrapper: HelperWrapper() {
                     val slicingCriteria =
                         slicer.locateSlicingCriteria(graph, slicingCriterion!!)
                     if (slicingCriteria.isEmpty()) {
-                        throw ExecutionException(
-                            "Unable to locate $slicingCriterion in the dynamic control flow graph"
-                        )
+                        ApplicationManager.getApplication().invokeLater {
+                            Messages.showMessageDialog(
+                                "Unable to locate $slicingCriterion in the dynamic control flow graph. Select another slicing criterion",
+                                "Slicing Criterion Error",
+                                AllIcons.General.WarningDialog
+                            )
+                        }
+                        SelectSlicingCriterionAction.resetSlicingCriterion()
+//                        throw ExecutionException(
+//                            "Unable to locate $slicingCriterion in the dynamic control flow graph"
+//                        )
                     }
 
                     indicator.text = "Slicing"

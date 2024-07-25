@@ -9,6 +9,7 @@ import com.intellij.util.ui.UIUtil;
 import com.intellij.xdebugger.XDebugSession;
 import com.intellij.xdebugger.XSourcePosition;
 import com.intellij.xdebugger.frame.XSuspendContext;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.xdebugger.impl.XSourcePositionImpl;
 import com.intellij.xdebugger.impl.actions.XDebuggerActions;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +32,7 @@ public class DppJavaDebugProcess extends JavaDebugProcess {
     public static DppJavaDebugProcess create(@NotNull final XDebugSession session, @NotNull final DebuggerSession javaSession) {
         DppJavaDebugProcess res = new DppJavaDebugProcess(session, javaSession);
         javaSession.getProcess().setXDebugProcess(res);
+
         Statement firstLine = WrapperManager.getCurrentWrapper().getFirstInSlice(); // tbd
         if (firstLine != null) {
             res.breakPointController.addBreakpoint(firstLine);
@@ -48,8 +50,8 @@ public class DppJavaDebugProcess extends JavaDebugProcess {
         if (!WrapperManager.getCurrentWrapper().isInSlice(statement)) {
             super.runToPosition(XSourcePositionImpl.create(position.getFile(), position.getLine()), context);
         } else {
-            Messages.showErrorDialog("The line you selected is out of the slice, please try again!",
-                    UIUtil.removeMnemonic(ActionsBundle.actionText(XDebuggerActions.RUN_TO_CURSOR)));
+            ApplicationManager.getApplication().invokeLater( () -> Messages.showErrorDialog("The line you selected is out of the slice, please try again!",
+                    UIUtil.removeMnemonic(ActionsBundle.actionText(XDebuggerActions.RUN_TO_CURSOR))));
             getSession().positionReached(context);
         }
     }

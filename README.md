@@ -142,3 +142,4 @@ Khaled Ahmed, Mieszko Lis, and Julia Rubin. Slicer4J: A Dynamic Slicer for Java.
   - Select 'Run Plugin' run configuration, run by pressing the green run button in the toolbar
   - An IDE instance will open in a new window with your custom slicer present in the 'Select Slicer' list or Configuration menu
     - You can test your wrapper by manually adding it in the settings (+ button and specify name/location (e.g. ca.ubc.ece.resess.wrappers.Slicer4JWrapper))
+  - When the implementation is ready, please submit a pull request to the main repository to make it accessible to other users

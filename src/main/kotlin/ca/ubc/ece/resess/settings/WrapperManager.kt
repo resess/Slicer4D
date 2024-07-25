@@ -5,6 +5,7 @@ import ca.ubc.ece.resess.slicer.ParameterSpec
 import ca.ubc.ece.resess.wrappers.Slicer4JWrapper
 import ca.ubc.ece.resess.ui.EditorSliceVisualizer
 import ca.ubc.ece.resess.ui.SelectParametersActionGroup
+import ca.ubc.ece.resess.ui.SelectSlicingCriterionAction
 import ca.ubc.ece.resess.util.ParameterType
 import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Variable
@@ -12,6 +13,7 @@ import ca.ubc.ece.resess.wrappers.ListOfWrapperPaths
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
@@ -19,7 +21,6 @@ import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.xmlb.XmlSerializerUtil
 import kotlin.reflect.full.createInstance
-
 
 @State(
     name = "WrapperManager",
@@ -30,7 +31,6 @@ import kotlin.reflect.full.createInstance
 class WrapperManager : PersistentStateComponent<WrapperManager> {
 
     companion object {
-        @JvmStatic
         private var defaultWrapper: APILayer = Slicer4JWrapper()
         private var defaultWrapperMetadata: WrapperMetadata = WrapperMetadata(
             "Slicer4J (default)",
@@ -41,12 +41,11 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
 
         private var extraParameters: HashMap<ParameterSpec, ArrayList<ParameterType>> = hashMapOf()
 
+        @JvmStatic
         var project: Project? = null
 
+        @JvmStatic
         var extraParametersStatus: Boolean = false
-        var slicingCriterionStatus: Boolean = false
-
-        private var slicingCriterion: Statement? = null
 
         //wrapper selection
         @JvmStatic
@@ -70,16 +69,16 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
 
         @JvmStatic
         fun backToDefault() {
-            resetParameters(defaultWrapperMetadata.specs!!.size == 0)
             currentWrapper = defaultWrapper
             currentWrapperMetadata = defaultWrapperMetadata
+            resetParameters(defaultWrapperMetadata.specs!!.size != 0)
         }
 
         @JvmStatic
         fun setCurrentWrapper(wrapperInfo: WrapperMetadata) {
-            resetParameters(wrapperInfo.specs!!.size == 0)
             currentWrapper = getWrapperFromPath(wrapperInfo.location!!) ?: throw IllegalArgumentException("Invalid path")
             currentWrapperMetadata = wrapperInfo
+            resetParameters(wrapperInfo.specs!!.size != 0)
         }
 
         //set wrapper
@@ -95,18 +94,30 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
                 kClass.createInstance() as APILayer?
             } catch (e: ClassNotFoundException) {
                 println("Class not found: $path")
-                Messages.showMessageDialog("Wrapper not found at location $path. Make sure to add your wrapper to the project, and/or to specify its correct location",
-                    "Location Error", AllIcons.General.WarningDialog)
+                ApplicationManager.getApplication().invokeLater {
+                    Messages.showMessageDialog(
+                        "Wrapper not found at location $path. Make sure to add your wrapper to the project, and/or to specify its correct location",
+                        "Location Error", AllIcons.General.WarningDialog
+                    )
+                }
                 null
             } catch (e: InstantiationException) {
                 println("Cannot instantiate class: $path. Make sure it has a no-arg constructor.")
-                Messages.showMessageDialog("Cannot instantiate the wrapper at location $path. Make sure it has a no-arg constructor.",
-                    "Instantiation Error", AllIcons.General.WarningDialog)
+                ApplicationManager.getApplication().invokeLater {
+                    Messages.showMessageDialog(
+                        "Cannot instantiate the wrapper at location $path. Make sure it has a no-arg constructor.",
+                        "Instantiation Error", AllIcons.General.WarningDialog
+                    )
+                }
                 null
             } catch (e: IllegalAccessException) {
                 println("Illegal access: Cannot instantiate class: $path")
-                Messages.showMessageDialog("Cannot access and instantiate wrapper at location $path. Make sure it has a no-arg constructor.",
-                    "Access Error", AllIcons.General.WarningDialog)
+                ApplicationManager.getApplication().invokeLater {
+                    Messages.showMessageDialog(
+                        "Cannot access and instantiate wrapper at location $path. Make sure it has a no-arg constructor.",
+                        "Access Error", AllIcons.General.WarningDialog
+                    )
+                }
                 null
             }
         }
@@ -118,7 +129,6 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
             val paths = ListOfWrapperPaths.paths
 
             paths.forEach { path ->
-                println(path)
                 val instance = getWrapperFromPath(path)
                 if (instance != null) {
                     wrappersMetadata.add(
@@ -135,17 +145,17 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
 
 
         //parameter specification
+        @JvmStatic
         fun setSlicingCriterion(statement: Statement) {
             assert(statement.slicingContext != null)
-            slicingCriterionStatus = true
-            slicingCriterion = statement
-            assert(currentWrapper.setSlicingCriterion(statement))
             project = statement.slicingContext!!.project
+            assert(currentWrapper.setSlicingCriterion(statement))
             greyLining()
             getVariables()
         }
 
 
+        @JvmStatic
         fun setExtraParameter(pair: Pair<ParameterSpec, ArrayList<ParameterType>>) {
             extraParameters[pair.first] = pair.second
 
@@ -167,27 +177,42 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
         }
 
         private fun greyLining() {
-            if (project != null && slicingCriterionStatus && extraParametersStatus) {
+            if (project != null && SelectSlicingCriterionAction.slicingCriterionStatus && extraParametersStatus) {
                 println("started")
                 val sliceVisualizer = EditorSliceVisualizer(this.project!!)
                 sliceVisualizer.start()
             } else {
-                println("false: $slicingCriterionStatus, $extraParametersStatus")
-                println("metadata: ${currentWrapperMetadata.name}, ${currentWrapperMetadata.location}, ${currentWrapperMetadata.specs}")
+                println("false: ${SelectSlicingCriterionAction.slicingCriterionStatus}, $extraParametersStatus")
+                if (EditorSliceVisualizer.isRunning) {
+                    assert(project != null)
+                    val sliceVisualizer = EditorSliceVisualizer(project!!)
+                    sliceVisualizer.stop()
+                }
             }
+        }
+
+        @JvmStatic
+        fun removedCappedExtraParameter(spec: ParameterSpec) {
+            extraParameters.remove(spec) // since capped parameter removed, it is no longer complete, so remove the previous complete array if it was present
+            extraParametersStatus = false
+            greyLining() // will stop grey lining
         }
 
         private fun resetParameters(hasExtraParameters: Boolean) {
             extraParameters = hashMapOf()
             SelectParametersActionGroup.resetChildrenMap()
-
-            if (project != null && slicingCriterionStatus && extraParametersStatus) {
+            SelectSlicingCriterionAction.resetSlicingCriterion()
+            if (EditorSliceVisualizer.isRunning) {
                 val sliceVisualizer = EditorSliceVisualizer(project!!)
                 sliceVisualizer.stop()
             }
 
+            resetStatus(hasExtraParameters)
+        }
+
+        private fun resetStatus(hasExtraParameters: Boolean) {
             extraParametersStatus = !hasExtraParameters
-            slicingCriterionStatus = false
+            SelectSlicingCriterionAction.slicingCriterionStatus = false
         }
 
         @JvmStatic
@@ -196,8 +221,9 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
         @JvmStatic
         private fun getVariables() {
             sliceVariables = ArrayList()
-            if (!slicingCriterionStatus || !extraParametersStatus || slicingCriterion == null || slicingCriterion!!.slicingContext == null){ return }
-            val e: AnActionEvent = slicingCriterion!!.slicingContext!!
+            if (!SelectSlicingCriterionAction.slicingCriterionStatus || !extraParametersStatus || SelectSlicingCriterionAction.slicingCriterion == null || SelectSlicingCriterionAction.slicingCriterion!!.slicingContext == null){ return }
+            val e: AnActionEvent = SelectSlicingCriterionAction.slicingCriterion!!.slicingContext!!
+
 
             val sliceLines = getSliceLines()
             val editor = e.getData(CommonDataKeys.EDITOR) ?: throw IllegalArgumentException("No editor found")
@@ -254,17 +280,23 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
             return ArrayList(sliceLines.toSet())
         }
 
+        var slicerWrapperFields = listOf<String>("name", "location")
+        var slicerWrappers = mutableListOf<WrapperMetadata>()
+        private var isInitialized = false
 
+        init {
+            if (!isInitialized) {
+                slicerWrappers.clear()
+                slicerWrappers.add(defaultWrapperMetadata)
+                slicerWrappers.addAll(getAllWrapperMetadata())
+                resetStatus(currentWrapperMetadata.specs?.size != 0)
+
+                isInitialized = true
+            }
+        }
     }
 
-    var slicerWrapperFields = listOf<String>("name", "location")
-    var slicerWrappers = mutableListOf<WrapperMetadata>()
 
-    init {
-        slicerWrappers.add(defaultWrapperMetadata)
-        slicerWrappers.addAll(getAllWrapperMetadata())
-        resetParameters(currentWrapperMetadata.specs?.size != 0)
-    }
 
 
 

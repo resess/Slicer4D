@@ -1,4 +1,4 @@
 package ca.ubc.ece.resess.util
 
-interface ParameterType {
+interface ParameterType { // Englobes Statement and Variable functions
 }

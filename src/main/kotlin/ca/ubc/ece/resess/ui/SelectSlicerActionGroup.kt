@@ -17,8 +17,8 @@ class SelectSlicerActionGroup : ActionGroup() {
     private val childrenMap: HashMap<WrapperMetadata, AnAction> = hashMapOf()
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
-        val settings = service<WrapperManager>()
-        val slicerWrappers = settings.slicerWrappers
+//        val settings = service<WrapperManager>()
+        val slicerWrappers = WrapperManager.slicerWrappers
 
         val children = mutableListOf<AnAction>()
 
@@ -43,6 +43,7 @@ class SelectSlicerActionGroup : ActionGroup() {
         }
 
         // Add "Add Slicer" action
+        children.add(Separator())
         children.add(WrapperManagerUI.getEditConfigurationAction())
         return children.toTypedArray()
     }

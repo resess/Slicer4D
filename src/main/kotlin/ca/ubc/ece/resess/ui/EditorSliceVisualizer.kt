@@ -36,9 +36,6 @@ class EditorSliceVisualizer(private val project: Project) {
             greyOutAttributes.foregroundColor = GREY_OUT_COLOR
         }
 
-        /**
-         * Called in [ca.ubc.ece.resess.pages.EditorComponentImplFixture.getGreyedOutLines]
-         */
         @JvmStatic
         fun getGreyedOutLines(editor: Editor): HashSet<Int> {
             val greyedOutLines = HashSet<Int>()
@@ -52,6 +49,8 @@ class EditorSliceVisualizer(private val project: Project) {
             }
             return greyedOutLines
         }
+
+        var isRunning = false
     }
 
     private val messageBusConnection = project.messageBus.connect()
@@ -60,6 +59,7 @@ class EditorSliceVisualizer(private val project: Project) {
     fun start() {
         LOG.info("Start")
         // First remove all previous greyouts
+        isRunning = true
         ApplicationManager.getApplication().invokeAndWait { removeAllGreyOuts() }
         // Add new greyouts
         visualizeInExistingEditors()
@@ -80,6 +80,7 @@ class EditorSliceVisualizer(private val project: Project) {
 
     fun stop() {
         LOG.info("Stop")
+        isRunning = false
         messageBusConnection.disconnect()
         ApplicationManager.getApplication().invokeAndWait { removeAllGreyOuts() }
     }

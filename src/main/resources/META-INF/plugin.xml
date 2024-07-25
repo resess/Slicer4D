@@ -77,7 +77,7 @@
                     anchor="last"/>
         </group>
 
-        <group id="ca.ubc.ece.resess.ui.SliceMenu" text="Slicer4D menu" popup="true" class="ca.ubc.ece.resess.ui.SliceMenu" icon="com.intellij.icons.AllIcons.Actions.MenuCut">
+        <group id="ca.ubc.ece.resess.ui.SliceMenu" text="Slicer4D menu" popup="true" class="ca.ubc.ece.resess.ui.SelectSlicerActionGroup" icon="com.intellij.icons.AllIcons.Actions.MenuCut">
             <add-to-group group-id="RunnerActions" anchor="last"/>
         </group>
 

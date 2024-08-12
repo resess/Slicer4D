@@ -11,14 +11,10 @@ import ca.ubc.ece.resess.util.Statement
 import ca.ubc.ece.resess.util.Variable
 import ca.ubc.ece.resess.wrappers.ListOfWrapperPaths
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
-import com.intellij.psi.*
-import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.xmlb.XmlSerializerUtil
 import kotlin.reflect.full.createInstance
 
@@ -150,8 +146,7 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
             assert(statement.slicingContext != null)
             project = statement.slicingContext!!.project
             assert(currentWrapper.setSlicingCriterion(statement))
-            greyLining()
-            getVariables()
+            greyLiningAndGetVariables()
         }
 
 
@@ -161,7 +156,7 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
 
             var nbInfParams = 0
             currentWrapperMetadata.specs!!.forEach(){
-                if (it.numberOfValues == 0) nbInfParams += 1
+                if (it.isOptional()) nbInfParams += 1
             }
             var NonInfSize = 0
             extraParameters.forEach(){
@@ -172,15 +167,15 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
                 extraParametersStatus = true
                 assert(currentWrapper.setParameters(extraParameters))
             }
-            greyLining()
-            getVariables()
+            greyLiningAndGetVariables()
         }
 
-        private fun greyLining() {
+        private fun greyLiningAndGetVariables() {
             if (project != null && SelectSlicingCriterionAction.slicingCriterionStatus && extraParametersStatus) {
                 println("started")
                 val sliceVisualizer = EditorSliceVisualizer(this.project!!)
                 sliceVisualizer.start()
+                Variable.getSliceVariables(this.project!!)
             } else {
                 println("false: ${SelectSlicingCriterionAction.slicingCriterionStatus}, $extraParametersStatus")
                 if (EditorSliceVisualizer.isRunning) {
@@ -195,7 +190,7 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
         fun removedCappedExtraParameter(spec: ParameterSpec) {
             extraParameters.remove(spec) // since capped parameter removed, it is no longer complete, so remove the previous complete array if it was present
             extraParametersStatus = false
-            greyLining() // will stop grey lining
+            greyLiningAndGetVariables() // will stop grey lining
         }
 
         private fun resetParameters(hasExtraParameters: Boolean) {
@@ -217,68 +212,6 @@ class WrapperManager : PersistentStateComponent<WrapperManager> {
 
         @JvmStatic
         var sliceVariables : ArrayList<Variable> = ArrayList()
-
-        @JvmStatic
-        private fun getVariables() {
-            sliceVariables = ArrayList()
-            if (!SelectSlicingCriterionAction.slicingCriterionStatus || !extraParametersStatus || SelectSlicingCriterionAction.slicingCriterion == null || SelectSlicingCriterionAction.slicingCriterion!!.slicingContext == null){ return }
-            val e: AnActionEvent = SelectSlicingCriterionAction.slicingCriterion!!.slicingContext!!
-
-
-            val sliceLines = getSliceLines()
-            val editor = e.getData(CommonDataKeys.EDITOR) ?: throw IllegalArgumentException("No editor found")
-            val psiFile = PsiDocumentManager.getInstance(e.project!!).getPsiFile(editor.document) ?: throw IllegalArgumentException("No psi file found")
-
-            val document = editor.document
-
-            psiFile.accept(object : PsiRecursiveElementVisitor() {
-                override fun visitElement(element: PsiElement) {
-                    super.visitElement(element)
-                    when (element) {
-                        is PsiVariable -> addVariable(element)
-                        is PsiReferenceExpression -> addReference(element)
-                    }
-                }
-
-                private fun addVariable(variable: PsiVariable) {
-                    if (variable.name != "System.out") {
-                        val lineNumber = document.getLineNumber(variable.textRange.startOffset)
-                        val className = PsiTreeUtil.getParentOfType(variable, PsiClass::class.java)?.name!!
-                        if (sliceLines.contains(lineNumber)) {
-                            sliceVariables.add(Variable(Statement(className, lineNumber), variable.name!!, true))
-                        }
-                    }
-                }
-
-                private fun addReference(reference: PsiReferenceExpression) {
-                    if (reference.text != "System.out") {
-                        val resolved = reference.resolve()
-                        if (resolved is PsiVariable) {
-                            val lineNumber = document.getLineNumber(reference.textRange.startOffset)
-                            val className = PsiTreeUtil.getParentOfType(resolved, PsiClass::class.java)?.name!!
-                            if (sliceLines.contains(lineNumber)) {
-                                sliceVariables.add(Variable(Statement(className, lineNumber), reference.text, true))
-                            }
-                        }
-                    }
-                }
-            })
-
-        }
-
-        private fun getSliceLines(): List<Int> {
-            val sliceLines = ArrayList<Int>()
-            var currentStatement : Statement? = currentWrapper.getFirstInSlice()?: return sliceLines
-
-            while (currentStatement != null) {
-                if (!sliceLines.contains(currentStatement.lineNo)) {
-                    sliceLines.add(currentStatement.lineNo)
-                }
-                currentStatement = currentWrapper.nextInSlice(currentStatement)
-            }
-
-            return ArrayList(sliceLines.toSet())
-        }
 
         var slicerWrapperFields = listOf<String>("name", "location")
         var slicerWrappers = mutableListOf<WrapperMetadata>()

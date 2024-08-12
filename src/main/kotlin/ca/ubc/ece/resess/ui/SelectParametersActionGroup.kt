@@ -21,35 +21,39 @@ class SelectParametersActionGroup : ActionGroup() {
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         val children = mutableListOf<AnAction>()
+        val optionalChildren = mutableListOf<AnAction>()
 
         val parameterSpecs : ArrayList<ParameterSpec> = WrapperManager.getCurrentWrapperMetadata().specs ?: return children.apply{add(Separator())}.toTypedArray()
         if (parameterSpecs.size == 0) {
             children.add(Separator())
             return children.toTypedArray()
         }
+//        children.add(Separator())
 
         for (spec in parameterSpecs) {
             if (childrenMap.keys.contains(spec)) {
                 val action = childrenMap[spec]!!
-//                action.templatePresentation.icon = if (action.getStatus()) AllIcons.Debugger.ThreadStates.Idle else AllIcons.Actions.InSelection
-                children.add(action as AnAction)
+                if (spec.isOptional()) {
+                    optionalChildren.add(action as AnAction)
+                } else {
+                    children.add(action as AnAction)
+                }
                 continue
             }
-
-
             val action = WrapperManagerUI.getExtraParameterAction(spec)
-//            action.templatePresentation.icon = if (action.getStatus()) AllIcons.Debugger.ThreadStates.Idle else AllIcons.Actions.InSelection
             childrenMap[spec] = action
-            children.add(action as AnAction)
+            if (spec.isOptional()) {
+                optionalChildren.add(action as AnAction)
+            } else {
+                children.add(action as AnAction)
+            }
         }
+//        children.add(Separator())
+        children.addAll(optionalChildren) //necessary children first, then optional
         children.add(Separator())
         return children.toTypedArray()
     }
 }
-
-//TODO: add removal for SC ("remove $statement as SC" when alr selected), and within selection options ("remove" instead of "already selected")
-        //todo: remove "done" icons for selector actions ->  either to be selected, or to be removed
-        //todo: add "done" (IDLE) icon for display actions that are done (capped and unlimited)
 
 class DisplayParametersActionGroup : ActionGroup() {
     private var duplicateChildrenMap: HashMap<ParameterSpec, ParameterGetterActionInterface> = SelectParametersActionGroup.childrenMap
@@ -57,6 +61,7 @@ class DisplayParametersActionGroup : ActionGroup() {
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         val children = mutableListOf<AnAction>()
+        val optionalChildren = mutableListOf<AnAction>()
 
         val parameterSpecs : ArrayList<ParameterSpec> = WrapperManager.getCurrentWrapperMetadata().specs ?: return children.apply{add(Separator())}.toTypedArray()
         if (parameterSpecs.size == 0) {
@@ -68,14 +73,22 @@ class DisplayParametersActionGroup : ActionGroup() {
 
         var count = 0
         duplicateChildrenMap.values.forEach() {
-            if(it.getStatus()) count +=1
+            if(it.getStatus()) count += 1
         }
 
-        children.add(Separator("Extra Parameters so far: $count/${parameterSpecs.size}"))
+        var necessary = parameterSpecs.size
+        parameterSpecs.forEach() {
+            if (it.isOptional()) {
+                necessary -= 1
+                count -=1
+            }
+        }
+
+        children.add(Separator("Necessary Extra Parameters: ${if (count <= 0) "0" else count}/${necessary}"))
         for (spec in parameterSpecs) {
             val specAction : ParameterGetterActionInterface? = if (duplicateChildrenMap.keys.contains(spec)) duplicateChildrenMap[spec] else null
             val type: String = if (spec.type == TypeOfParameter.STATEMENT) "Statement" else "Variable"
-            val actionName = "[${type}] ${spec.label} - ${specAction?.getValues()?.size ?: "0"}/${if (spec.numberOfValues == 0) "unlimited" else "${spec.numberOfValues}"}"
+            val actionName = "[${type}] ${spec.label}${if (!spec.isOptional()) " - ${specAction?.getValues()?.size ?: "0"}/${spec.numberOfValues}" else ""}"
             val action = object: ActionGroup(actionName ,true) {
                 override fun update(e: AnActionEvent) {
                     super.update(e)
@@ -91,6 +104,15 @@ class DisplayParametersActionGroup : ActionGroup() {
                     if (specAction == null) {
                         return innerChildren.toTypedArray()
                     }
+                    if (spec.isOptional() && specAction.getValues().isEmpty()) {
+                        innerChildren.add(object : AnAction(" "){
+                            override fun actionPerformed(e: AnActionEvent) {
+                            }
+                            override fun update(e: AnActionEvent) {
+                                e.presentation.isEnabled = false
+                            }
+                        })
+                    }
                     for (value in specAction.getValues()) {
                         val action = object : AnAction(value.toString()) { //Submenu with list of value locations
                             override fun actionPerformed(e: AnActionEvent) {
@@ -102,8 +124,14 @@ class DisplayParametersActionGroup : ActionGroup() {
                     return innerChildren.toTypedArray()
                 }
             }
-            children.add(action)
+            if (spec.isOptional()) {
+                optionalChildren.add(action)
+            } else {
+                children.add(action)
+            }
         }
+        children.add(Separator("Optional Extra Parameters:"))
+        children.addAll(optionalChildren)
         children.add(Separator())
         return children.toTypedArray()
     }

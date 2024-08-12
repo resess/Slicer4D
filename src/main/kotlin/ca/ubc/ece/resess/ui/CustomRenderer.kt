@@ -1,5 +1,6 @@
 package ca.ubc.ece.resess.ui
 
+import ca.ubc.ece.resess.listeners.DebuggerListener.Companion.isDebugging
 import ca.ubc.ece.resess.settings.WrapperManager
 import com.intellij.debugger.DebuggerManagerEx
 import com.intellij.debugger.engine.evaluation.EvaluationContext
@@ -23,11 +24,16 @@ class CustomRenderer : NodeRendererImpl("CustomRenderer", true) {
     override fun isApplicable(type: Type): Boolean {
         val project: Project = WrapperManager.project?: return false
         val debuggerSession = DebuggerManagerEx.getInstanceEx(project).sessions.firstOrNull()?.xDebugSession
-        println("${debuggerSession?.debugProcess?.javaClass?.simpleName}")
         return debuggerSession?.debugProcess?.javaClass?.simpleName == "DppJavaDebugProcess"
+    }
+
+    @Override
+    override fun isEnabled(): Boolean {
+        return isDebugging
     }
 
     override fun getUniqueId(): String {
         return "ca.ubc.ece.resess.ui.NameAdjuster"
     }
+
 }

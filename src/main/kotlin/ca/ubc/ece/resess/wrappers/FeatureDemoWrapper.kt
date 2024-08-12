@@ -368,7 +368,7 @@ class FeatureDemoWrapper: HelperWrapper() {
         val env = builder.activeTarget().dataContext(dataContext).build()
 
         val task =
-            object : Task.WithResult<Slice, Exception>(project, "Executing Slicing with 'Slicer4J'", true) {
+            object : Task.WithResult<Slice, Exception>(project, "Executing Slicing with 'Slicer4J' (demo wrapper)", true) {
                 override fun compute(indicator: ProgressIndicator): Slice {
                     val outputDirectory = createTempDirectory("slicer4j-outputs-")
 //                    Desktop.getDesktop().open(outputDirectory.toFile())

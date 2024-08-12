@@ -12,13 +12,9 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.components.service
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.ui.Messages
-import com.intellij.psi.*
-import com.intellij.psi.util.PsiTreeUtil
 
 //
 
@@ -117,8 +113,8 @@ interface ParameterGetterActionInterface {
 // fix? two purposes in one class (an action object + spec manager)
 class StatementGetterAction(private val name: String?,
                                      private val spec: ParameterSpec) : AnAction("Select as $name"), ParameterGetterActionInterface {
-    private var status: Boolean = spec.numberOfValues == 0
-    private var values: ArrayList<ParameterType> = if (spec.numberOfValues == 0) ArrayList() else ArrayList(spec.numberOfValues)
+    private var status: Boolean = spec.isOptional()
+    private var values: ArrayList<ParameterType> = if (spec.isOptional()) ArrayList() else ArrayList(spec.numberOfValues)
 
     override fun getStatus(): Boolean {
         return status
@@ -159,9 +155,13 @@ class StatementGetterAction(private val name: String?,
         super.update(e)
         val statement = Statement.getStatement(e)
         if (values.contains(statement)) {
-            e.presentation.text = "Remove this line from $name"
+            e.presentation.text = "Remove from $name"
             e.presentation.isEnabled = true
             e.presentation.icon = AllIcons.Diff.Remove
+        } else if (status && !spec.isOptional()) {
+            e.presentation.text =  "Max selections reached for $name"
+            e.presentation.isEnabled = false
+            e.presentation.icon = AllIcons.Debugger.ThreadStates.Idle
         } else {
             e.presentation.text = "Select as $name"
             e.presentation.isEnabled = true
@@ -185,7 +185,7 @@ class StatementGetterAction(private val name: String?,
         }
 
         values.add(statement)
-        if (spec.numberOfValues == values.size || spec.numberOfValues == 0) {
+        if (spec.numberOfValues == values.size || spec.isOptional()) {
             status = true
             WrapperManager.setExtraParameter(Pair(spec, values))
         }
@@ -194,8 +194,8 @@ class StatementGetterAction(private val name: String?,
 
 class VariableGetterAction(private val name: String?,
                             private val spec: ParameterSpec) : ActionGroup("Select as $name", true), ParameterGetterActionInterface {
-    private var status: Boolean = spec.numberOfValues == 0
-    private var values: ArrayList<ParameterType> = if (spec.numberOfValues == 0) ArrayList() else ArrayList(spec.numberOfValues)
+    private var status: Boolean = spec.isOptional()
+    private var values: ArrayList<ParameterType> = if (spec.isOptional()) ArrayList() else ArrayList(spec.numberOfValues)
 
     override fun getStatus(): Boolean {
         return status
@@ -235,20 +235,20 @@ class VariableGetterAction(private val name: String?,
     override fun update(e: AnActionEvent) {
         super.update(e)
 
-        var allSelected = true
-        val variables = getVariables(e)
-        variables.forEach { allSelected = allSelected && (values.contains(it)) }
+        val variables = Variable.getVariablesInSingleLine(e)
+        val atLeastOneSelected = variables.intersect(values).isNotEmpty()
+
         if (variables.isEmpty()){
             e.presentation.text = "No variables on this line ($name)"
             e.presentation.isEnabled = false
             e.presentation.icon = AllIcons.Actions.InSelection
-//        } else if (allSelected) {
-//            e.presentation.text = "Already selected all variables as $name"
-//            e.presentation.isEnabled = true
-//            e.presentation.icon = AllIcons.Debugger.Db_muted_disabled_breakpoint
         } else if (status && spec.numberOfValues != 0) {
             e.presentation.text =  "Max selections reached for $name"
-            e.presentation.isEnabled = true
+            if (atLeastOneSelected) {
+                e.presentation.isEnabled = true
+            } else {
+                e.presentation.isEnabled = false
+            }
             e.presentation.icon = AllIcons.Debugger.ThreadStates.Idle
         } else {
             e.presentation.text = "Select as $name"
@@ -264,7 +264,7 @@ class VariableGetterAction(private val name: String?,
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         val children = mutableListOf<AnAction>()
-        for (variable in getVariables(e!!)) {
+        for (variable in Variable.getVariablesInSingleLine(e!!)) {
             val action = object : AnAction("Select ${variable.name}") {
                 override fun actionPerformed(e: AnActionEvent) {
                     if (values.contains(variable)) {
@@ -276,7 +276,7 @@ class VariableGetterAction(private val name: String?,
                         return
                     }
                     values.add(variable)
-                    if (spec.numberOfValues == values.size || spec.numberOfValues == 0) {
+                    if (spec.numberOfValues == values.size || spec.isOptional()) {
                         status = true
                         WrapperManager.setExtraParameter(Pair(spec, values))
                     }
@@ -298,59 +298,6 @@ class VariableGetterAction(private val name: String?,
             children.add(action)
         }
         return children.toTypedArray()
-    }
-
-    private fun getLineNo(e : AnActionEvent) : Int {
-            val editor = e.getData(CommonDataKeys.EDITOR)!!
-            val offset = editor.caretModel.offset
-            val document = editor.document
-            return document.getLineNumber(offset) + 1
-    }
-
-    private fun getVariables(e: AnActionEvent): List<Variable> {
-        val variableList = ArrayList<Variable>()
-
-        val lineNo : Int = getLineNo(e)
-
-        val editor = e.getData(CommonDataKeys.EDITOR) ?: return variableList
-        val psiFile = PsiDocumentManager.getInstance(e.project!!).getPsiFile(editor.document) ?: return variableList
-
-        val document = editor.document
-
-        psiFile.accept(object : PsiRecursiveElementVisitor() {
-            override fun visitElement(element: PsiElement) {
-                super.visitElement(element)
-                when (element) {
-                    is PsiVariable -> addVariable(element)
-                    is PsiReferenceExpression -> addReference(element)
-                }
-            }
-
-            private fun addVariable(variable: PsiVariable) {
-                if (variable.name != "System.out") {
-                    val lineNumber = document.getLineNumber(variable.textRange.startOffset) + 1
-                    val className = PsiTreeUtil.getParentOfType(variable, PsiClass::class.java)?.name!!
-                    if (lineNumber == lineNo) {
-                        variableList.add(Variable(Statement(className, lineNumber), variable.name!!, true))
-                    }
-                }
-            }
-
-            private fun addReference(reference: PsiReferenceExpression) {
-                if (reference.text != "System.out") {
-                    val resolved = reference.resolve()
-                    if (resolved is PsiVariable) {
-                        val lineNumber = document.getLineNumber(reference.textRange.startOffset) + 1
-                        val className = PsiTreeUtil.getParentOfType(resolved, PsiClass::class.java)?.name!!
-                        if (lineNumber == lineNo) {
-                        variableList.add(Variable(Statement(className, lineNumber), reference.text, true))
-                            }
-                    }
-                }
-            }
-        })
-
-        return variableList
     }
 
 }

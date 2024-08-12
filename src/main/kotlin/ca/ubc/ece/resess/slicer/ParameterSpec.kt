@@ -6,7 +6,11 @@ data class ParameterSpec(
     var description: String? = null, //developer describes how the user should use/select the parameter -- used in instructions
     var numberOfValues: Int = 1, // 0 means unlimited, 1+ means limited to the number
     val extensionPoint: ExtensionPoint = ExtensionPoint.EDITOR_WINDOW
-)
+) {
+    fun isOptional() : Boolean {
+        return numberOfValues == 0;
+    }
+}
 
 enum class ExtensionPoint {
     EDITOR_WINDOW,

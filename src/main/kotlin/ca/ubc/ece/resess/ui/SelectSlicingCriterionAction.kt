@@ -55,41 +55,8 @@ class SelectSlicingCriterionAction : AnAction() {
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        // Selects the line the cursor is currently on, regardless of any highlighting
-        val editor = e.getData(CommonDataKeys.EDITOR)!!
-        val psiFile = e.getData(CommonDataKeys.PSI_FILE)!!
-        val offset = editor.caretModel.offset
-        val document = editor.document
-        val lineNo = document.getLineNumber(offset) + 1
-        LOG.info("Selected slicing criterion line number is $lineNo")
-
-        val element = psiFile.findElementAt(offset)
-        if (element == null) {
-            ApplicationManager.getApplication().invokeLater() {
-                Messages.showMessageDialog(
-                    "Cannot find any element at this location",
-                    "Location Error", AllIcons.General.WarningDialog
-                )
-            }
-            throw ExecutionException("Cannot find any element at this location")
-        }
-        val clazz = PsiTreeUtil.getParentOfType(element, PsiClass::class.java)
-        if (clazz == null) {
-            ApplicationManager.getApplication().invokeLater() {
-                Messages.showMessageDialog(
-                    "This location is not inside a Java class",
-                    "Location Error", AllIcons.General.WarningDialog
-                )
-            }
-            throw ExecutionException("This location is not inside a Java class")
-        }
-
-        val fileName = e.getData(CommonDataKeys.VIRTUAL_FILE)?.name
-        println("File Name is $fileName")
-        LOG.info("Class Name is ${clazz.qualifiedName}")
-
         //set the slicing criterion
-        val statement = Statement(clazz.qualifiedName!!, lineNo, e)
+        val statement = Statement.getStatement(e)
 
         if (slicingCriterion == statement) { //slicing criterion already selected and same line
             resetSlicingCriterion()

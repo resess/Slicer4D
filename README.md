@@ -1,19 +1,24 @@
 <p><img alt="Slicer4D logo" src="./assets/logo_no_bg.png" width="100" /></p>
 <h1>Slicer4D: Slice-based debugging for IntelliJ</h1>
 
-This plugin integrates dynamic slicing into the existing IntelliJ IDE Debugger. 
+This repository hosts Slicer4D,  a plugin extending the debugger of IntelliJ IDEA – one of the most popular IDEs – with slicing capabilities. We named our slicing-based debugger extension Slicer4D. Slicer4D offers a user-friendly interface for developers to perform dynamic slicing and further enhances the debugging experience by focusing the developers’ attention only on the parts of the code relevant to the failure. Additionally, Slicer4D is designed in an extensible way, to support integration of a variety of slicing techniques. We hope our tool will pave the way to enhancing developer productivity by seamlessly incorporating dynamic slicing into a familiar development environment. 
+Contributions to this repo are most welcome!
+
+<b>If you use this tool, please cite:</b>
+
+Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for Java. The 39th IEEE/ACM International Conference on Automated Software Engineering (ASE), Tool Demos track, 2024.
 
 Watch the demo video on YouTube:
 
 [![Watch the demo video on YouTube](https://img.youtube.com/vi/OlCy0IQPZYI/0.jpg)](https://www.youtube.com/watch?v=OlCy0IQPZYI)
-
 
 PS: This tool is only accurate for deterministic programs 
 
 ## 1. Prerequisites
 
 [//]: # (- Ensure that you have [Graphviz]&#40;https://graphviz.org/&#41; installed.)
-- We recommend gaining familiarity with slice-based debugging and dynamic analysis. 
+- We recommend gaining familiarity with slice-based debugging and dynamic analysis.
+- Requires Java Runtime Environment version 11 for runnning the pluging and then JRE required for the specific slicing tool (e.g., [Slicer4J](https://people.ece.ubc.ca/mjulia/publications/Slicer4J_2021.pdf).
 
 ## 2. Setup
 - Clone this repository. 

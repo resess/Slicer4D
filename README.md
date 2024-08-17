@@ -4,7 +4,7 @@
 This plugin integrates dynamic slicing into the existing IntelliJ IDE Debugger. 
 
 Watch the demo video on YouTube:
-[![Watch the demo video on YouTube](https://img.youtube.com/vi/abc123xyz.jpg)](https://www.youtube.com/watch?v=OlCy0IQPZYI)
+[![Watch the demo video on YouTube](https://img.youtube.com/vi/abc123xyz/0.jpg)](https://www.youtube.com/watch?v=OlCy0IQPZYI)
 
 
 PS: This tool is only accurate for deterministic programs 

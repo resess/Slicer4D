@@ -4,29 +4,29 @@
 This repository hosts Slicer4D,  a plugin extending the debugger of IntelliJ IDEA – one of the most popular IDEs – with slicing capabilities. We named our slicing-based debugger extension Slicer4D. Slicer4D offers a user-friendly interface for developers to perform dynamic slicing and further enhances the debugging experience by focusing the developers’ attention only on the parts of the code relevant to the failure. Additionally, Slicer4D is designed in an extensible way, to support integration of a variety of slicing techniques. We hope our tool will pave the way to enhancing developer productivity by seamlessly incorporating dynamic slicing into a familiar development environment. 
 Contributions to this repo are most welcome!
 
-<b>If you use this tool, please cite:</b>
-
-Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for Java. The 39th IEEE/ACM International Conference on Automated Software Engineering (ASE), Tool Demos track, 2024.
-
 <b>Watch the demo video on YouTube:</b>
 
 [![Watch the demo video on YouTube](https://img.youtube.com/vi/OlCy0IQPZYI/0.jpg)](https://www.youtube.com/watch?v=OlCy0IQPZYI)
 
-PS: This tool is only accurate for deterministic programs 
 
-## 1. Prerequisites
+## 1. Citation 
+<b>If you use this tool, please cite:</b>
 
+Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for Java. The 39th IEEE/ACM International Conference on Automated Software Engineering (ASE), Tool Demos track, 2024.
+
+
+## 2. Prerequisites
 [//]: # (- Ensure that you have [Graphviz]&#40;https://graphviz.org/&#41; installed.)
 - We recommend gaining familiarity with slice-based debugging and dynamic analysis.
 - Requires Java Runtime Environment version 11 for runnning the pluging and then JRE required for the specific slicing tool (e.g., [Slicer4J](https://people.ece.ubc.ca/mjulia/publications/Slicer4J_2021.pdf).
 
-## 2. Setup
+## 3. Setup
 - Clone this repository. 
 - Open it as a new project in IntelliJ IDEA 
 - Ensure the 'Run Plugin' run configuration is selected and run it by pressing on the green run button in the toolbar (or by running `./gradlew runIde`).
 - IntelliJ will prompt you to create a new project, or will open up an existing project in a new window, which is an IDE instance with the plugin running live. 
 
-## 3. Using Slicer4D
+## 4. Using Slicer4D
 - The first step to using Slicer4D is adding a slicer wrapper. By accessing the configuration menu, you can specify a new wrapper by providing its name and location. The default implementation uses Slicer4J Java slicer. 
 
 <p><img alt="Step 1 (described above)" src="./assets/UsingSlicer4D/Slide1.png" width="600"/></p>
@@ -53,10 +53,10 @@ PS: This tool is only accurate for deterministic programs
 <p><img alt="Step 6 (described above)" src="./assets/UsingSlicer4D/Slide6.png" width="600"/></p>
 
 
-## 4. Architecture 
+## 5. Architecture 
 <p><img alt="Slicer4D Architecture" src="./assets/overview.png" width="600"/></p>
 
-### 4.1 `APILayer`
+### 5.1 `APILayer`
 Located at: [src/main/kotlin/ca/ubc/ece/resess/slicer/APILayer](https://github.com/resess/Slicer4D/tree/main/src/main/kotlin/ca/ubc/ece/resess/slicer/APILayer.kt)
 
 `APILayer` provides a standardized communication interface between the IDE and slicer wrappers through the methods below:
@@ -84,7 +84,7 @@ input, it retrieves the previous statement in the slice.
 - `Statement getFirstInSlice()`: returns the first statement in the slice
 
 
-### 4.2 `HelperWrapper`
+### 5.2 `HelperWrapper`
 Located at: [src/main/kotlin/ca/ubc/ece/resess/slicer/HelperWrapper](https://github.com/resess/Slicer4D/tree/main/src/main/kotlin/ca/ubc/ece/resess/slicer/HelperWrapper.kt)
 
 `HelperWrapper` is an abstract class that provides more flexibility for integrating third-party slicers not originally designed to work with Slicer4D. It implements `APILayer`, and declares the `getSlice()` method, which reads and translates a simple
@@ -96,7 +96,7 @@ to implement `getSlice()` instead of four slicer navigation methods.
 The figure below shows the different ways developers can implement the `APILayer` interface (either directly or through `HelperWrapper`) to create a slicer wrapper:
 <p><img alt="UML Diagram of APILayer's possible implementations" src="./assets/class.png" width="400"/></p>
 
-### 4.3 `DynamicSliceDebuggerRunner`
+### 5.3 `DynamicSliceDebuggerRunner`
 Located at: [src/main/kotlin/ca/ubc/ece/resess/DynamicSliceDebuggerRunner](https://github.com/resess/Slicer4D/tree/main/src/main/kotlin/ca/ubc/ece/resess/execute/DynamicSliceDebuggerRunner.kt)
 
 This component is for starting a new debugging session. In the original debugger, the `GenericDebuggerRunner` is used for starting debugging sessions. The `DynamicSliceDebuggerRunner`  is a subclass of the original `GenericDebuggerRunner` with has two differences:
@@ -108,7 +108,7 @@ The figure below summarizes the process to start a debugging session with dynami
 <p><img alt="Customized Debugging Session Flow" src="./assets/DebuggingSessionFlow.png" width="350"/></p>
 
 
-### 4.4 `DebugController`
+### 5.4 `DebugController`
 Located at: [src/main/kotlin/ca/ubc/ece/resess/dbgcontroller](https://github.com/resess/Slicer4D/tree/main/src/main/kotlin/ca/ubc/ece/resess/dbgcontroller)
 
 This component is designed to implement skipping of non-slice lines by modifying the behaviour of existing debug actions. It has 3 subcomponents:
@@ -122,28 +122,14 @@ The stepping commands inherit from the original commands but with the difference
 
 - `BreakPointController`: for managing breakpoints that are specific to Slicer4D’s needs. It adds a breakpoint to the first slice line.
 
-### 4.5 `UI`
+### 5.5 `UI`
 Located at: [src/main/kotlin/ca/ubc/ece/resess/ui](https://github.com/resess/Slicer4D/tree/main/src/main/kotlin/ca/ubc/ece/resess/ui)
 
 This component consists of 2 submodules:
 - `SelectSlicingCriterionAction`: implements the functionality of choosing a line in the program as the slicing criterion for the dynamic slicing, by right-clicking a line in the source-code editor. It selects the line that the mouse is currently on, regardless of any highlighting.
 - `EditorSliceVisualizer`: implements 'line graying' of non-slice lines. When the debugging session ends, the original line colours are restored
 
-## 5. Testing
-For the unit tests, run `./gradlew test` in the project root directory.
-
-For the integration test, open the Slicer4D repository in IntelliJ IDEA, and make sure you build Gradle correctly. Next, open the test repository by running the `runIdeForUiTest` command. Finally, visit `src/test/java/ca/ubc/ece/resess/dbgcontroller/pages/UITest.java` to run the test.
-
-## 6. Authors and acknowledgment
- 
-
-Khaled Ahmed, Mieszko Lis, and Julia Rubin. Slicer4J: A Dynamic Slicer for Java. The ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE), 2021. <bibtex>
-
-
-## 7. Ideas for Future Development 
-- Add default support for more slicers
-
-## Add custom slicer
+## 6. Add custom slicer
 - Steps:
   - Clone this repository
   - Open Slicer4D as a new project in IntelliJ IDE
@@ -153,3 +139,11 @@ Khaled Ahmed, Mieszko Lis, and Julia Rubin. Slicer4J: A Dynamic Slicer for Java.
   - An IDE instance will open in a new window with your custom slicer present in the 'Select Slicer' list or Configuration menu
     - You can test your wrapper by manually adding it in the settings (+ button and specify name/location (e.g. ca.ubc.ece.resess.wrappers.Slicer4JWrapper))
   - When the implementation is ready, please submit a pull request to the main repository to make it accessible to other users
+
+## 7. Testing
+For the unit tests, run `./gradlew test` in the project root directory.
+
+For the integration test, open the Slicer4D repository in IntelliJ IDEA, and make sure you build Gradle correctly. Next, open the test repository by running the `runIdeForUiTest` command. Finally, visit `src/test/java/ca/ubc/ece/resess/dbgcontroller/pages/UITest.java` to run the test.
+
+## 8. Limitations
+This tool is only accurate for deterministic program. 

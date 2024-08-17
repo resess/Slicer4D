@@ -8,7 +8,7 @@ Contributions to this repo are most welcome!
 
 Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for Java. The 39th IEEE/ACM International Conference on Automated Software Engineering (ASE), Tool Demos track, 2024.
 
-Watch the demo video on YouTube:
+<b>Watch the demo video on YouTube:</b>
 
 [![Watch the demo video on YouTube](https://img.youtube.com/vi/OlCy0IQPZYI/0.jpg)](https://www.youtube.com/watch?v=OlCy0IQPZYI)
 

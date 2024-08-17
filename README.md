@@ -1,24 +1,34 @@
 <p><img alt="Slicer4D logo" src="./assets/logo_no_bg.png" width="100" /></p>
-<h1>Slicer4D: Slice-based debugging for IntelliJ</h1>
+<h1>Slicer4D: Slice-based Debugging for IntelliJ</h1>
 
-This repository hosts Slicer4D,  a plugin extending the debugger of IntelliJ IDEA – one of the most popular IDEs – with slicing capabilities. We named our slicing-based debugger extension Slicer4D. Slicer4D offers a user-friendly interface for developers to perform dynamic slicing and further enhances the debugging experience by focusing the developers’ attention only on the parts of the code relevant to the failure. Additionally, Slicer4D is designed in an extensible way, to support integration of a variety of slicing techniques. We hope our tool will pave the way to enhancing developer productivity by seamlessly incorporating dynamic slicing into a familiar development environment. 
+Debugging software failures often demands significant time and effort. 
+Program slicing is a technique that can help developers fast-track the debugging process by allowing them to focus only on the code relevant to the failure. 
+However, despite the effectiveness of slicing, these techniques are not integrated into modern IDEs. 
+Instead, most, if not all, current slicing tools are launched from the command line and produce log files as output. 
+Developers thus have to switch between the IDE and the command line tools, manually correlating the log file results with their source code, which hinders the adoption of the slicing-based debugging approaches in practice.
+
+To address this problem, we introduce Slicer4D: a plugin extending the debugger of IntelliJ IDEA – one of the most popular IDEs – with slicing capabilities. 
+Slicer4D offers a user-friendly interface for developers to perform dynamic slicing and 
+further enhances the debugging experience by focusing the developers’ attention only on the parts of the code relevant to the failure. 
+Additionally, Slicer4D is designed in an extensible way, to support integration of a variety of slicing techniques. 
+Yet, it its current implementation, the tool is only accurate for deterministic program. 
+
+We hope our tool will pave the way to enhancing developer productivity by seamlessly incorporating dynamic slicing into a familiar development environment. 
 Contributions to this repo are most welcome!
 
-<b>Watch the demo video on YouTube:</b>
+## 1. More info and paper reference 
 
-[![Watch the demo video on YouTube](https://img.youtube.com/vi/OlCy0IQPZYI/0.jpg)](https://www.youtube.com/watch?v=OlCy0IQPZYI)
+To get started, you can watch the <b>video</b> describing Slicer4D (https://www.youtube.com/watch?v=OlCy0IQPZYI) or read our paper.
 
-
-## 1. Citation 
-<b>If you need to reference our plugin, please use the following citations:</b>
+<b>If you use or extend Slicer4D, please cite:</b>
 
 Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for Java. The 39th IEEE/ACM International Conference on Automated Software Engineering (ASE), Tool Demos track, 2024.
 
 
 ## 2. Prerequisites
 [//]: # (- Ensure that you have [Graphviz]&#40;https://graphviz.org/&#41; installed.)
-- We recommend gaining familiarity with slice-based debugging and dynamic analysis.
-- Requires Java Runtime Environment version 11 for runnning the pluging and then JRE required for the specific slicing tool (e.g., [Slicer4J](https://people.ece.ubc.ca/mjulia/publications/Slicer4J_2021.pdf).
+- We recommend gaining familiarity with program slicing.
+- Have Java Runtime Environment version 11 for runnning the pluging and then JRE required for the specific slicing tool (e.g., [Slicer4J](https://people.ece.ubc.ca/mjulia/publications/Slicer4J_2021.pdf)).
 
 ## 3. Setup
 - Clone this repository. 
@@ -51,7 +61,6 @@ Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for J
 - One is then able to step through the slice using the customized Slicer4D actions (Step Over, Step Into, Run to Cursor etc.). Additionally, users have access to a customized variable window that only displays variables relevant to the slice.
 
 <p><img alt="Step 6 (described above)" src="./assets/UsingSlicer4D/Slide6.png" width="600"/></p>
-
 
 ## 5. Architecture 
 <p><img alt="Slicer4D Architecture" src="./assets/overview.png" width="600"/></p>
@@ -129,7 +138,7 @@ This component consists of 2 submodules:
 - `SelectSlicingCriterionAction`: implements the functionality of choosing a line in the program as the slicing criterion for the dynamic slicing, by right-clicking a line in the source-code editor. It selects the line that the mouse is currently on, regardless of any highlighting.
 - `EditorSliceVisualizer`: implements 'line graying' of non-slice lines. When the debugging session ends, the original line colours are restored
 
-## 6. Add custom slicer
+## 6. Adding custom slicers
 - Steps:
   - Clone this repository
   - Open Slicer4D as a new project in IntelliJ IDE
@@ -145,5 +154,3 @@ For the unit tests, run `./gradlew test` in the project root directory.
 
 For the integration test, open the Slicer4D repository in IntelliJ IDEA, and make sure you build Gradle correctly. Next, open the test repository by running the `runIdeForUiTest` command. Finally, visit `src/test/java/ca/ubc/ece/resess/dbgcontroller/pages/UITest.java` to run the test.
 
-## 8. Limitations
-This tool is only accurate for deterministic program. 

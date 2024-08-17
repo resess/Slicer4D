@@ -10,7 +10,7 @@ Contributions to this repo are most welcome!
 
 
 ## 1. Citation 
-<b>If you use this tool, please cite:</b>
+<b>If you need to reference our plugin, please use the following citations:</b>
 
 Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for Java. The 39th IEEE/ACM International Conference on Automated Software Engineering (ASE), Tool Demos track, 2024.
 

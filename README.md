@@ -144,11 +144,11 @@ This component consists of 2 submodules:
   - Add your implementation to the 'ca.ubc.ece.resess.wrappers' package, and add its location to the 'ListOfWrapperPaths' class.
   - Select 'Run Plugin' run configuration, run by pressing the green run button in the toolbar.
   - An IDE instance will open in a new window with your custom slicer present in the 'Select Slicer' list or Configuration menu.
-    - You can test your wrapper by manually adding it in the settings (+ button and specify name/location (e.g., ca.ubc.ece.resess.wrappers.Slicer4JWrapper))
-  - When the implementation is ready, please submit a pull request to the main repository to make it accessible to other users.
+  - You can _test_ your **wrapper** (.kt) and **slicing technique** (single file, .jar, .zip, or other) by adding it to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder. 
+  - When the implementation is ready, you can add the wrapper and slicing technique files to the [Slicer4D Wrappers Google Drive](https://drive.google.com/drive/u/0/folders/1RKu_LmEWUOX1M9qAm_TOqcA4jbeJfLaw).
+       - They will be automatically added to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder when any user builds the project
 
 ## 7. Testing
 For the unit tests, run `./gradlew test` in the project root directory.
 
 For the integration test, open the Slicer4D repository in IntelliJ IDEA, and make sure you build Gradle correctly. Next, open the test repository by running the `runIdeForUiTest` command. Finally, visit `src/test/java/ca/ubc/ece/resess/dbgcontroller/pages/UITest.java` to run the test.
-

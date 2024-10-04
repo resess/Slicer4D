@@ -37,7 +37,7 @@ Sahar Badihi, Sami Nourji, Julia Rubin. Slicer4D: A Slicing-based Debugger for J
 - IntelliJ will prompt you to create a new project, or will open up an existing project in a new window, which is an IDE instance with the plugin running live. 
 
 ## 4. Using Slicer4D
-- The first step to using Slicer4D is adding a slicer wrapper. By accessing the configuration menu, you can specify a new wrapper by providing its name and location. The default implementation uses Slicer4J Java slicer. 
+- The first step to using Slicer4D is adding a slicer wrapper. By accessing the configuration menu, you can specify a new wrapper by providing its name and location (See item 6 of this page about how to add custom slicers). The default implementation uses Slicer4J Java slicer. 
 
 <p><img alt="Step 1 (described above)" src="./assets/UsingSlicer4D/Slide1.png" width="600"/></p>
 
@@ -141,12 +141,11 @@ This component consists of 2 submodules:
   - Clone this repository.
   - Open Slicer4D as a new project in IntelliJ IDE.
   - Implement the APILayer interface directly, or inherit the abstract class HelperWrapper and implement the remaining methods.
-  - Add your implementation to the 'ca.ubc.ece.resess.wrappers' package, and add its location to the 'ListOfWrapperPaths' class.
-  - Select 'Run Plugin' run configuration, run by pressing the green run button in the toolbar.
+  - To add your slicer locally (for personal use or testing your implementation), add your **wrapper** (.kt file) and **slicing technique** (.jar, .zip, or single file) to `src/main/kotlin/ca.ubc.ece.resess.wrappers/local/wrapper_code` and `src/main/kotlin/ca.ubc.ece.resess.wrappers/local/slicer_code` folders, respectively. 
+  - Select the 'Run Plugin' configuration and press the green run button in the toolbar.
   - An IDE instance will open in a new window with your custom slicer present in the 'Select Slicer' list or Configuration menu.
-  - You can _test_ your **wrapper** (.kt) and **slicing technique** (single file, .jar, .zip, or other) by adding it to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder. 
-  - When the implementation is ready, you can add the wrapper and slicing technique files to the [Slicer4D Wrappers Google Drive](https://drive.google.com/drive/u/0/folders/1RKu_LmEWUOX1M9qAm_TOqcA4jbeJfLaw).
-       - They will be automatically added to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder when any user builds the project
+  - Once you tested your implementation, to share your slicer globally, upload the **wrapper** and **slicing technique** files to the [Slicer4D Wrappers Google Drive](https://drive.google.com/drive/u/0/folders/1RKu_LmEWUOX1M9qAm_TOqcA4jbeJfLaw) under "wrapper_code" and "slicer_code", respectively.
+        - They will be automatically added to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder when any user builds the project
 
 ## 7. Testing
 For the unit tests, run `./gradlew test` in the project root directory.

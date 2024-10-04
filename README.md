@@ -145,7 +145,7 @@ This component consists of 2 submodules:
   - Select the 'Run Plugin' configuration and press the green run button in the toolbar.
   - An IDE instance will open in a new window with your custom slicer present in the 'Select Slicer' list or Configuration menu.
   - Once you tested your implementation, to share your slicer globally, upload the **wrapper** and **slicing technique** files to the [Slicer4D Wrappers Google Drive](https://drive.google.com/drive/u/0/folders/1RKu_LmEWUOX1M9qAm_TOqcA4jbeJfLaw) under "wrapper_code" and "slicer_code", respectively.
-      - They will be automatically added to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder when any user builds the project
+      - They will be automatically added to the `src/main/kotlin/ca.ubc.ece.resess.wrappers/remote` folder when any user builds the project.
 
 ## 7. Testing
 For the unit tests, run `./gradlew test` in the project root directory.
